@@ -38,12 +38,14 @@ if (!stationName) {
     try {
 	const result = await getOmuIndex(stationName);
 
+console.log(result);
 	if( result ) {
             const replyMessage = {
                 type: 'text',
-                text: `${result.stationName}駅周辺500m以内にある喫茶店の数: ${result.cafeCount}件\n ${result.stationName}駅周辺500m以内にある町中華の数: ${result.chineseRestaurantCount}件\n ${result.stationName}駅のオムライスインデックス: ${result.omuIndex}`
+                text: `${result.stationName}駅周辺500m以内にある喫茶店の数: ${result.cafeCount}件\n ${result.stationName}駅周辺500m以内にある町中華の数: ${result.chineseRestaurantCount}件\n ${result.stationName}駅のオムライスインデックス: ${result.omuIndex}\n${result.cafeMessage}`
             };
             console.log(replyMessage);
+            console.log(replyMessage.text);
         }
     } catch (error) {
         console.error('Error fetching Omu Index:', error);

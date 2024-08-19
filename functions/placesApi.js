@@ -25,7 +25,51 @@ console.log(geocodeUrl);
 }
 
 // Nearby Search APIを使用して店舗数を取得する関数
-async function getAllPlaceCount(lat, lng, tpy) {
+async function getAllPlaceCount(lat, lng, tpy,kwd) {
+    const apiKey = process.env.GOOGLE_API_KEY;
+    let totalCount = 0;
+    let nextPageToken = null;
+    let places = "";
+
+    do {
+        let placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=200&type=${tpy}&key=${apiKey}&language=ja&keyword=${kwd}`;
+        if(nextPageToken) {
+            placesUrl += `&pagetoken=${nextPageToken}`;
+        }
+
+	    let response;
+	    try {
+            response = await fetch(placesUrl);
+	    } catch (error) {
+		    console.log(error);
+		    throw new Error('Nearby Search Error');
+	    }
+        if( !response.ok ) {
+		    throw new Error('Nearby Search Error: ' + response.status );
+        }
+        const data = await response.json();
+
+        for(let place of data.results) {
+	        console.log(place.name);
+            places += `${place.name}\n`;
+	        totalCount ++;
+	    }
+        nextPageToken = data.next_page_token;
+
+        console.log(`現在の店舗数: ${totalCount}件`);
+        if (nextPageToken) {
+            await new Promise(resolve => setTimeout(resolve, 2000));  // APIに負荷をかけないように待機
+        }
+    } while (nextPageToken);
+
+    return {
+        count: totalCount,
+        message: `${places}`
+    }
+}
+
+// Nearby Search API (New)を使用して店舗数を取得する関数
+async function getAllPlaceCount2(lat, lng, tpy) {
     const apiKey = process.env.GOOGLE_API_KEY;
     let totalCount = 0;
     let nextPageToken = null;
@@ -42,7 +86,7 @@ async function getAllPlaceCount(lat, lng, tpy) {
 		}
 	    },
             includedTypes: [`${tpy}`],  // 喫茶店,町中華
-	    languageCode: "ja"
+	        languageCode: "ja"
 //            pagetoken: nextPageToken || null
         };
 
@@ -64,17 +108,17 @@ async function getAllPlaceCount(lat, lng, tpy) {
 		throw new Error('Nearby Search Error');
 	}
         const result = await response.json();
-//        if (result.status === 'OK') {
-	    for(let place of result.places) {
-		console.log(place.displayName.text);
-	    }
-            totalCount += result.places.length;
-            nextPageToken = result.next_page_token;
+	for(let place of result.places) {
+	    console.log(place.displayName.text);
+	    totalCount ++;
+	}
+//      totalCount += result.places.length;
+        nextPageToken = result.next_page_token;
 
-            console.log(`現在の店舗数: ${totalCount}件`);
-            if (nextPageToken) {
-                await new Promise(resolve => setTimeout(resolve, 2000));  // APIに負荷をかけないように待機
-            }
+        console.log(`現在の店舗数: ${totalCount}件`);
+        if (nextPageToken) {
+            await new Promise(resolve => setTimeout(resolve, 2000));  // APIに負荷をかけないように待機
+        }
 //        }
 //	else {
 //            throw new Error('Places API Error: ' + result.status);
@@ -83,6 +127,7 @@ async function getAllPlaceCount(lat, lng, tpy) {
 
     return totalCount;
 }
+
 
 //
 //
@@ -95,18 +140,20 @@ export async function getOmuIndex (stationName) {
         const lng = location.lng;
 
         // 緯度経度から指定した範囲内の店舗数を取得
-        const cafeCount = await getAllPlaceCount(lat, lng, "cafe");
-        const chineseRestaurantCount = await getAllPlaceCount(lat, lng, "chinese_restaurant");
+        const cafeCount = await getAllPlaceCount(lat, lng, "cafe","local");
+        const chineseRestaurantCount = await getAllPlaceCount(lat, lng, "restaurant","町中華");
 
         // ここでオムライスインデックスの計算を行う
-        const omuIndex = calculateOmuIndex(cafeCount, chineseRestaurantCount);
+        const omuIndex = cafeCount.count + chineseRestaurantCount.count;
 
         // 結果をオブジェクトとして返す
         return {
             stationName: stationName,
-            cafeCount: cafeCount,
-            chineseRestaurantCount: chineseRestaurantCount,
-            omuIndex: omuIndex
+            cafeCount: cafeCount.count,
+            chineseRestaurantCount: chineseRestaurantCount.count,
+            omuIndex: omuIndex,
+            cafeMessage: cafeCount.message,
+            chineseRestaurantMessage: chineseRestaurantCount.message
         };
     } catch (error) {
         console.error(error);
