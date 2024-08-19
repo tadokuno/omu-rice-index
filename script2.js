@@ -1,5 +1,4 @@
 import 'dotenv/config';  // .envファイルから環境変数を読み込む
-import fetch from 'node-fetch';
 import readline from 'readline';
 import keypress from 'keypress';
 
