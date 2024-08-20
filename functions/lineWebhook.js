@@ -26,7 +26,7 @@ export async function handler(event, context) {
             "Authorization": `Bearer ${config.channelAccessToken}`,
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({"chatId": event.source?.userId})
+          body: JSON.stringify({"chatId": singleEvent.source?.userId})
         })
       } catch {
         console.log("Loading Animation Error");
