@@ -18,7 +18,9 @@ export async function handler(event, context) {
   const promises = body.events.map(async (singleEvent) => {
     if (singleEvent.type === 'message' && singleEvent.message.type === 'text') {
       const stationName = singleEvent.message.text;
-
+      if( !stationName.endsWith('駅') ) {
+        stationName += '駅';
+      }
       try {
         fetch('https://api.line.me/v2/bot/chat/loading/start', {
           method: 'POST',
@@ -38,7 +40,7 @@ export async function handler(event, context) {
 	      let messages='';
 	      let point = 0;
         if( result ) {
-          messages = `${result.stationName}駅周辺の喫茶店の数: ${result.cafeCount}件\n${result.stationName}駅周辺の町中華の数: ${result.chineseRestaurantCount}件\n\n`
+          messages = `${result.stationName}周辺の喫茶店の数: ${result.cafeCount}件\n${result.stationName}周辺の町中華の数: ${result.chineseRestaurantCount}件\n\n`
 	        point = Math.round((result.cafeCount + result.chineseRestaurantCount)/6);
 	      }
 
