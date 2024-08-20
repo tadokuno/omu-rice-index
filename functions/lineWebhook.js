@@ -17,7 +17,7 @@ export async function handler(event, context) {
 
   const promises = body.events.map(async (singleEvent) => {
     if (singleEvent.type === 'message' && singleEvent.message.type === 'text') {
-//      const stationName = singleEvent.message.text;
+      const stationName = singleEvent.message.text;
 //      if( !stationName.endsWith('駅') ) {
 //        stationName += '駅';
 //      }
