@@ -24,23 +24,27 @@ console.log(geocodeUrl);
     }
 }
 
+const exclusionCafe = ["TULLY’S COFFEE","タリーズコーヒー","カフェ・ベローチェ","椿屋カフェ","カフェ・ド・クリエ","ドトールコーヒーショップ","サンマルクカフェ","エクセルシオール"];
+const exclusionRestraunt = ["日高屋","バーミヤン"];
+
 // Nearby Search APIを使用して店舗数を取得する関数
-async function getAllPlaceCount(lat, lng, tpy,kwd) {
+async function getAllPlaceCount(lat, lng, tpy, kwd, radius, exclusion) {
     const apiKey = process.env.GOOGLE_API_KEY;
     let totalCount = 0;
     let nextPageToken = null;
     let places = "";
 
     do {
-        let placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=200&type=${tpy}&key=${apiKey}&language=ja&keyword=${kwd}`;
+        let placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${radius}&type=${tpy}&key=${apiKey}&language=ja&keyword=${kwd}`;
         if(nextPageToken) {
             placesUrl += `&pagetoken=${nextPageToken}`;
         }
 
 	    let response;
-	    try {
+console.log(placesUrl);
+        try {
             response = await fetch(placesUrl);
-	    } catch (error) {
+        } catch (error) {
 		    console.log(error);
 		    throw new Error('Nearby Search Error');
 	    }
@@ -48,11 +52,23 @@ async function getAllPlaceCount(lat, lng, tpy,kwd) {
 		    throw new Error('Nearby Search Error: ' + response.status );
         }
         const data = await response.json();
+//console.log(data);
+        if( data.status === 'INVALID_REQUEST') {
+            return {
+                count: totalCount,
+                message: `${places}`
+            }
+        }
 
         for(let place of data.results) {
-	        console.log(place.name);
-            places += `${place.name}\n`;
-	        totalCount ++;
+            if( exclusion.some(substring => place.name.includes(substring)) ) {
+                continue;
+            }
+            if( place.business_status === 'OPERATIONAL' ) {
+                places += `${place.name}\n`;
+                totalCount ++;
+            }
+//console.log(`Name:${place.name}`);
 	    }
         nextPageToken = data.next_page_token;
 
@@ -140,8 +156,8 @@ export async function getOmuIndex (stationName) {
         const lng = location.lng;
 
         // 緯度経度から指定した範囲内の店舗数を取得
-        const cafeCount = await getAllPlaceCount(lat, lng, "cafe","local");
-        const chineseRestaurantCount = await getAllPlaceCount(lat, lng, "restaurant","町中華");
+        const cafeCount = await getAllPlaceCount(lat, lng, "cafe","local",300,exclusionCafe);
+        const chineseRestaurantCount = await getAllPlaceCount(lat, lng, "restaurant",encodeURIComponent("町中華"),300,exclusionRestraunt);
 
         // ここでオムライスインデックスの計算を行う
         const omuIndex = cafeCount.count + chineseRestaurantCount.count;

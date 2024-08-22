@@ -35,7 +35,9 @@ export const calculateOmuIndex = async (stationName) => {
     - 道が入り組んでいる度合い (michi)
     - 飲食店に限らず古い店が生き残っている度合い (furui-mise)
     - 古いショーケースや食品サンプルが飾ってある店の存在感 (shoku-sample)
-    
+
+    根拠は簡潔に、120字以内にまとめてください。
+
     結果を次の形式のJSONオブジェクトとして返してください：
     {
       "shoutengai":  { "index": 得点, "text": "根拠" },
