@@ -169,7 +169,9 @@ export async function getOmuIndex (stationName) {
             chineseRestaurantCount: chineseRestaurantCount.count,
             omuIndex: omuIndex,
             cafeMessage: cafeCount.message,
-            chineseRestaurantMessage: chineseRestaurantCount.message
+            chineseRestaurantMessage: chineseRestaurantCount.message,
+            latitude: lat,
+            longitude: lng
         };
     } catch (error) {
         console.error(error);

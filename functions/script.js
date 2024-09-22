@@ -18,7 +18,8 @@ export async function omuIndexMain(stationName) {
     if( result ) {
       const cafeCount = Math.floor(result.cafeCount>20?10:result.cafeCount/2);
       const chineseRestaurantCount = Math.floor(result.chineseRestaurantCount>20?10:result.chineseRestaurantCount/2);
-      messages = `${result.stationName}周辺の喫茶店の数: ${result.cafeCount}件\n${result.stationName}周辺の町中華の数: ${result.chineseRestaurantCount}件\n\n`;
+      messages = `緯度: ${result.latitude}\n経度: ${result.longitude}\n\n`
+      messages += `喫茶店の数: ${result.cafeCount}件\n町中華の数: ${result.chineseRestaurantCount}件\n\n`;
       point = cafeCount + chineseRestaurantCount;
     }
 
@@ -32,7 +33,7 @@ export async function omuIndexMain(stationName) {
     }
     messages += '\n' + result.cafeMessage + '\n';
     messages += result.chineseRestaurantMessage + '\n';
-    return `オムライス指数: ${point}\n\n${messages}`;
+    return `${result.stationName}のオムライス指数: ${point}\n\n${messages}`;
   } catch (error) {
     console.error('Error fetching Omu Index:', error);
     return "エラー";
