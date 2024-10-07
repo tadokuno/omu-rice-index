@@ -1,4 +1,4 @@
-import { getOmuIndex } from './placesApi.js';
+import { getOmuIndexCountable } from './placesApi.js';
 import { calculateOmuIndex } from './openaiApi.js';
 
 const config = {
@@ -22,11 +22,11 @@ export async function omuIndexMain(stationName) {
     if( result ) {
       const localCafeIndex = roundCount(result.localCafe.count);
       const chineseRestaurantIndex = roundCount(result.chineseRestaurant.count);
-      const westernRestaurantIndex = roundCount(result.westernRestaurantCount.count);
+      const westernRestaurantIndex = roundCount(result.westernRestaurant.count);
       const snackIndex = roundCount(result.snack.count);
       messages = `喫茶店の数: ${result.localCafe.count}件\n`;
       messages += `町中華の数: ${result.chineseRestaurant.count}件\n`;
-      messages += `洋食屋の数: ${result.westernRestaurantCount.count}\n`;
+      messages += `洋食屋の数: ${result.westernRestaurant.count}\n`;
       messages += `スナックの数: ${result.snack.count}\n`;
       point = localCafeIndex + chineseRestaurantIndex + westernRestaurantIndex + snackIndex;
     }
@@ -39,34 +39,14 @@ export async function omuIndexMain(stationName) {
 //      messages += `${key} - 得点: ${data.index}, 根拠: ${data.text}\n`;
       messages += `${data.index}: ${data.text}\n`;
     }
-    messages += '\n' + result.cafeMessage + '\n';
-    messages += result.chineseRestaurantMessage + '\n';
-    return `${stationName}のオムライス指数: ${point}\n\n${messages}`;
+    messages += '\n' + result.localCafe.message + '\n';
+    messages += result.chineseRestaurant.message + '\n';
+    messages += result.westernRestaurant.message + '\n';
+    messages += result.snack.message + '\n';
+    return `${stationName}のオムライス指数: ${point}/80\n\n${messages}`;
   } catch (error) {
     console.error('Error fetching Omu Index:', error);
     return "エラー";
   }
 }
 
-// コマンドライン引数から駅名を取得
-
-//console.log("omuIndexMain Start")
-//const stationName = process.argv[2];
-
-//if (!stationName) {
-//    console.error('駅名を指定してください。');
-//    process.exit(1);
-//}
-
-// メイン処理
-//(async () => {
-//  try {
-//    const result = await omuIndexMain(stationName); // 戻り値は表示する文字列
-//    console.log(result);
-//  } catch (error) {
-//      console.error('Error fetching Omu Index:', error);
-//  } finally {
-//    process.stdin.setRawMode(false);  // stdinのrawモードを解除
-//    process.stdin.pause();  // stdinを閉じる
-//  }
-//})();
