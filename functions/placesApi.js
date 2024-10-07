@@ -159,7 +159,7 @@ export async function getOmuIndexCountable (stationName) {
         const localCafe = await getAllPlaceCount(lat, lng, "cafe","local",300,exclusionCafe);
         const chineseRestaurant = await getAllPlaceCount(lat, lng, "restaurant",encodeURIComponent("町中華"),300,exclusionRestraunt);
         const westernRestaurant = await getAllPlaceCount(lat, lng, "restaurant",encodeURIComponent("洋食屋"),300,exclusionRestraunt);
-        const snack = await getAllPlaceCount(lat, lng, "bar","Japanese",300,exclusionRestraunt);
+        const snack = await getAllPlaceCount(lat, lng, "bar",encodeURIComponent("スナック"),300,exclusionRestraunt);
 
         // 結果をオブジェクトとして返す
         return {
