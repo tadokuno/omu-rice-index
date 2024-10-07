@@ -43,6 +43,7 @@ export async function omuIndexMain(stationName) {
     messages += result.chineseRestaurant.message + '\n';
     messages += result.westernRestaurant.message + '\n';
     messages += result.snack.message + '\n';
+    point = point * 8/10;
     return `${stationName}のオムライス指数: ${point}/80\n\n${messages}`;
   } catch (error) {
     console.error('Error fetching Omu Index:', error);
