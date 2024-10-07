@@ -148,7 +148,7 @@ async function getAllPlaceCount2(lat, lng, tpy) {
 //
 //
 //
-export async function getOmuIndex (stationName) {
+export async function getOmuIndexCountable (stationName) {
     try {
         // 駅の緯度経度を取得
         const location = await getCoordinates(stationName);
@@ -156,22 +156,20 @@ export async function getOmuIndex (stationName) {
         const lng = location.lng;
 
         // 緯度経度から指定した範囲内の店舗数を取得
-        const cafeCount = await getAllPlaceCount(lat, lng, "cafe","local",300,exclusionCafe);
-        const chineseRestaurantCount = await getAllPlaceCount(lat, lng, "restaurant",encodeURIComponent("町中華"),300,exclusionRestraunt);
-
-        // ここでオムライスインデックスの計算を行う
-        const omuIndex = cafeCount.count + chineseRestaurantCount.count;
+        const localCafe = await getAllPlaceCount(lat, lng, "cafe","local",300,exclusionCafe);
+        const chineseRestaurant = await getAllPlaceCount(lat, lng, "restaurant",encodeURIComponent("町中華"),300,exclusionRestraunt);
+        const westernRestaurant = await getAllPlaceCount(lat, lng, "restaurant",encodeURIComponent("洋食屋"),300,exclusionRestraunt);
+        const snack = await getAllPlaceCount(lat, lng, "bar","Japanese",300,exclusionRestraunt);
 
         // 結果をオブジェクトとして返す
         return {
             stationName: stationName,
-            cafeCount: cafeCount.count,
-            chineseRestaurantCount: chineseRestaurantCount.count,
-            omuIndex: omuIndex,
-            cafeMessage: cafeCount.message,
-            chineseRestaurantMessage: chineseRestaurantCount.message,
-            latitude: lat,
-            longitude: lng
+            lat: lat,
+            lng: lng,
+            localCafe: { count: localCafe.count, message: localCafe.message },
+            chineseRestaurant: { count: chineseRestaurant.count, message: chineseRestaurant.message},
+            westernRestaurant: { count: westernRestaurant.count, message: westernRestaurant.message},
+            snack: { count: snack.count, message: snack.message},
         };
     } catch (error) {
         console.error(error);

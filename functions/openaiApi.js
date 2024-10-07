@@ -25,6 +25,14 @@ const OmuIndexSchema = z.object({
     index: z.number(), // Zodのint型に変更
     text: z.string(),
   }),
+  building: z.object({
+    index: z.number(), // Zodのint型に変更
+    text: z.string(),
+  }),
+  chain: z.object({
+    index: z.number(), // Zodのint型に変更
+    text: z.string(),
+  }),
 });
 
 // Function to calculate the Omu Index
@@ -35,6 +43,8 @@ export const calculateOmuIndex = async (stationName) => {
     - 道が入り組んでいる度合い (michi)
     - 飲食店に限らず古い店が生き残っている度合い (furui-mise)
     - 古いショーケースや食品サンプルが飾ってある店の存在感 (shoku-sample)
+    - 古い飲食ビルの存在感 (building)
+    - 全国に多店舗展開している店が少ない (chain)
 
     根拠は簡潔に、120字以内にまとめてください。
 
@@ -44,6 +54,8 @@ export const calculateOmuIndex = async (stationName) => {
       "michi":  { "index": 得点, "text": "根拠" },
       "furui-mise": { "index": 得点, "text": "根拠" },
       "shoku-sample": { "index": 得点, "text": "根拠" },
+      "building": { "index": 得点, "text": "根拠" },
+      "chain": { "index": 得点, "text": "根拠" },
     }`;
 
   try {
@@ -68,4 +80,3 @@ console.log("openai call");
     return null;
   }
 };
-

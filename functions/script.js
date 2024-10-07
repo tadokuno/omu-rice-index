@@ -6,6 +6,10 @@ const config = {
   channelSecret: process.env.CHANNEL_SECRET,
 };
 
+function roundCount(count) {
+  return Math.floor(count>20?10:count/2);
+}
+
 export async function omuIndexMain(stationName) {
   try {
     let point = 0;
@@ -13,14 +17,18 @@ export async function omuIndexMain(stationName) {
 
     const openaiPromise = calculateOmuIndex(stationName); // openai API 時間かかる
 
-    const result = await getOmuIndex(stationName); // Places API
+    const result = await getOmuIndexCountable(stationName); // Places API
 
     if( result ) {
-      const cafeCount = Math.floor(result.cafeCount>20?10:result.cafeCount/2);
-      const chineseRestaurantCount = Math.floor(result.chineseRestaurantCount>20?10:result.chineseRestaurantCount/2);
-      messages = `緯度: ${result.latitude}\n経度: ${result.longitude}\n\n`
-      messages += `喫茶店の数: ${result.cafeCount}件\n町中華の数: ${result.chineseRestaurantCount}件\n\n`;
-      point = cafeCount + chineseRestaurantCount;
+      const localCafeIndex = roundCount(result.localCafe.count);
+      const chineseRestaurantIndex = roundCount(result.chineseRestaurant.count);
+      const westernRestaurantIndex = roundCount(result.westernRestaurantCount.count);
+      const snackIndex = roundCount(result.snack.count);
+      messages = `喫茶店の数: ${result.localCafe.count}件\n`;
+      messages += `町中華の数: ${result.chineseRestaurant.count}件\n`;
+      messages += `洋食屋の数: ${result.westernRestaurantCount.count}\n`;
+      messages += `スナックの数: ${result.snack.count}\n`;
+      point = localCafeIndex + chineseRestaurantIndex + westernRestaurantIndex + snackIndex;
     }
 
     const result2 = await openaiPromise;
@@ -33,7 +41,7 @@ export async function omuIndexMain(stationName) {
     }
     messages += '\n' + result.cafeMessage + '\n';
     messages += result.chineseRestaurantMessage + '\n';
-    return `${result.stationName}のオムライス指数: ${point}\n\n${messages}`;
+    return `${stationName}のオムライス指数: ${point}\n\n${messages}`;
   } catch (error) {
     console.error('Error fetching Omu Index:', error);
     return "エラー";
