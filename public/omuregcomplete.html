@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ファイルアップロード</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #c0c0c0; /* Windows風の背景色 */
+            font-family: "MS UI Gothic", sans-serif;
+        }
+
+        .window {
+            border: 2px solid #808080;
+            width: 300px;
+            padding: 10px;
+            background-color: #d4d0c8;
+            box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #000000;
+            margin: 50px auto;
+        }
+
+        .title-bar {
+            background-color: #000080;
+            color: white;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .buttons {
+            display: flex;
+        }
+
+        .buttons button {
+            background-color: #c0c0c0;
+            border: none;
+            margin-left: 2px;
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
+
+        .content {
+            padding: 10px;
+            background-color: #d4d0c8;
+            font-size: 12px;
+        }
+
+        .complete-message {
+            display: none;
+            padding: 10px;
+            margin-top: 10px;
+            border: 2px solid #808080;
+            background-color: #d4d0c8;
+            box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #000000;
+            font-size: 12px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <span class="title">ファイルアップロード</span>
+            <div class="buttons">
+                <button class="minimize">-</button>
+                <button class="close">x</button>
+            </div>
+        </div>
+        <div class="content">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <label for="file">ファイルを選択:</label>
+                <input type="file" id="file" name="file" required><br><br>
+                <button type="submit">アップロード</button>
+            </form>
+            <div id="completeMessage" class="complete-message">完了しました</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // ファイルアップロード処理をシミュレート（ここに実際の処理を追加）
+            setTimeout(function () {
+                // アップロード完了後に完了メッセージを表示
+                document.getElementById('completeMessage').style.display = 'block';
+            }, 1000); // 1秒後に完了表示
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>駅周辺情報</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@5.3.6/dist/simplebar.min.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/simplebar@5.3.6/dist/simplebar.min.js"></script>
+    <style>
+        .content {
+            padding: 10px;
+            height: 40vh; /* タイトルバーの分を引いた高さ */
+            overflow-y: scroll; /* 常にスクロールバーを表示 */
+            font-size: 14px;
+            background-color: rgb(221, 221, 221);
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch; /* iOSでのスムーズスクロール */
+        }
+        .text label, input {
+            display: inline-block;
+            margin-right: 10px; /* ラベルと入力欄の間に余白を追加 */
+        }
+
+        .text input {
+            width: 200px; /* 入力欄の幅を調整 */
+        }
+        .input-window form {
+            background-color: rgb(221, 221, 221);
+        }
+    </style>
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <span class="title">駅周辺情報</span>
+            <div class="buttons">
+                <button class="minimize">-</button>
+                <button class="close">x</button>
+            </div>
+        </div>
+        <div class="content" data-simplebar data-simplebar-auto-hide="false">
+            中目黒駅 <br>
+            オムライス指数: 33<br><br>
+
+            喫茶店の数: 15件<br>
+            町中華の数: 13件<br>
+            
+            6: 中目黒駅周辺には比較的古い商店街が存在し、少し懐かしさを感じるが、現代的な店も多い。<br>
+            7: 駅周辺には細い道や入り組んだ路地が多く、散策するとレトロな雰囲気を味わえる。<br>
+            4: 古くからの営業を続ける店は残っているが、新しい開発の影響でその数は限られている。<br>
+            3: 古いショーケースや食品サンプルを飾っている店は少なく、全体的にモダンな印象が強い。<br>
+        </div>
+        <!-- 情報登録画面 -->
+            <div class="input-window">
+                <div class="title-bar">
+                    <span class="title">情報登録</span>
+                    <div class="buttons">
+                        <button class="minimize">-</button>
+                        <button class="close">x</button>
+                    </div>
+                </div>
+                <div class="content" data-simplebar data-simplebar-auto-hide="false">
+                    <form action="/stationinfo" method="post" enctype="multipart/form-data">
+                    <!-- 駅のテキスト入力 -->
+                    <div class="text">
+                        <label for="station">駅名</label>
+                        <input type="text" name="station" id="station" value="中目黒駅" required>
+                    </div>
+
+                    <!-- 商店街の様子 -->
+                    <fieldset class="choices">
+                        <legend>商店街の様子</legend>
+                        <label>
+                            <input type="radio" name="shop" value="10"> アーケードのある昔ながらの商店街があり、活況である <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="shop" value="5"> 商店街はあるが、シャッターが閉まっている店がちらほら <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="shop" value="0"> 商店街が見当たらない <br>
+                        </label>
+                    </fieldset>
+
+                    <!-- 路地の様子 -->
+                    <fieldset class="choices">
+                        <legend>周辺道路の様子</legend>
+                        <label>
+                            <input type="radio" name="road" value="10"> 細い路地があちこちにあり、町の奥行きを感じる <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="road" value="5"> 道は少ないが整備されていない <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="road" value="0"> きれいに区画整理されている。 <br>
+                        </label>
+                    </fieldset>
+
+                    <!-- 古い店はあるか -->
+                    <fieldset class="choices">
+                        <legend>古い店が残っているか</legend>
+                        <label>
+                            <input type="radio" name="old_store" value="10"> 昔からやっていると思われる店が多く見られる <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="old_store" value="5"> 再開発が進んでおり、ビルに入っている店が多い <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="old_store" value="0"> チェーン店のような店が大半である <br>
+                        </label>
+                    </fieldset>
+                    <!-- ショーケースや食品サンプルが見られるか -->
+                    <fieldset class="choices">
+                        <legend>ショーケースや食品サンプル</legend>
+                        <label>
+                            <input type="radio" name="showcase" value="10"> ショーケースの中に食品サンプルを置いている店がある <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="showcase" value="5"> ショーケースは無いが、写真やメニューを出している店がある <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="showcase" value="2"> ランチ時の案内程度 <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="showcase" value="0"> 表からはあまりよく分からない <br>
+                        </label>
+                    </fieldset>
+
+                    <!-- 画僧をアップロード -->
+                    <div class="file-upload">
+                        <label for="file">画像をアップロード：</label>
+                        <input type="file" id="file" name="file" accept="image/*">
+                    </div>
+
+                    <!-- 送信ボタン -->
+                    <div class="button-container">
+                        <input type="submit" value="送信" class="button">
+                    </div>
+                </form>
+            </div>
+            <footer>(c) OmuQuest</footer>
+        </div>
+    </div>
+</body>        

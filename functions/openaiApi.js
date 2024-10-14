@@ -41,8 +41,8 @@ export const calculateOmuIndex = async (stationName) => {
     あなたは日本の町の懐かしさを評価する専門家です。駅名「${stationName}」に基づいて、以下の4つの要素を0から10のスケールで評価し、それぞれの理由を述べてください：
     - 古い商店街の存在感 (shoutengai)
     - 道が入り組んでいる度合い (michi)
-    - 飲食店に限らず古い店が生き残っている度合い (furui-mise)
-    - 古いショーケースや食品サンプルが飾ってある店の存在感 (shoku-sample)
+    - 飲食店に限らず古い店が生き残っている度合い (furui_mise)
+    - 古いショーケースや食品サンプルが飾ってある店の存在感 (shoku_sample)
     - 古い飲食ビルの存在感 (building)
     - 全国に多店舗展開している店が少ない (chain)
 
@@ -52,8 +52,8 @@ export const calculateOmuIndex = async (stationName) => {
     {
       "shoutengai":  { "index": 得点, "text": "根拠" },
       "michi":  { "index": 得点, "text": "根拠" },
-      "furui-mise": { "index": 得点, "text": "根拠" },
-      "shoku-sample": { "index": 得点, "text": "根拠" },
+      "furui_mise": { "index": 得点, "text": "根拠" },
+      "shoku_sample": { "index": 得点, "text": "根拠" },
       "building": { "index": 得点, "text": "根拠" },
       "chain": { "index": 得点, "text": "根拠" },
     }`;

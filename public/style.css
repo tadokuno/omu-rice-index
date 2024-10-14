@@ -1,0 +1,160 @@
+body {
+    background-color: #C0C0C0;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.window {
+    width: 380px;
+    height: 630px;
+    border: 2px solid black;
+    background-color: #FFFFFF;
+    box-shadow: 3px 3px #808080;
+    position: relative;
+    overflow: hidden;
+}
+
+.title-bar {
+    background-color: #000080;
+    color: white;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 14px;
+}
+
+.buttons {
+    display: flex;
+}
+
+.buttons button {
+    background-color: white;
+    border: 1px solid black;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.content {
+    padding: 10px;
+    height: calc(100% - 40px); /* タイトルバーの分を引いた高さ */
+    overflow-y: scroll; /* 常にスクロールバーを表示 */
+    font-size: 14px;
+    background-color: white
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch; /* iOSでのスムーズスクロール */
+}
+
+/* スクロールバーのスタイル */
+.simplebar-track.simplebar-horizontal {
+  height: 10px;
+  background: #B5B5B5;
+  border-radius: 5px;
+  max-width: 372px;
+  margin: 0 auto;
+}
+.simplebar-scrollbar {
+  height: 10px;
+  background: #41485B;
+  border-radius: 5px;
+  top: 0;
+}
+
+header, footer {
+    background-color: #000080;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+    background-color: white;
+    border: 2px solid black;
+/*    width: 400px; */
+    margin: auto;
+}
+
+.text, .choices {
+    margin-bottom: 20px;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.button {
+    background-color: #C0C0C0;
+    border: 1px solid black;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+body {
+    background-color: #c0c0c0; /* 古いWindowsのような背景色 */
+}
+  
+  .choices {
+    border: 1px solid gray;
+    padding: 10px;
+    display: inline-block;
+    background-color: #d4d0c8; /* 古いWindowsのような背景色 */
+  }
+  
+  legend {
+    font-size: 12px;
+    padding: 0 5px;
+    background-color: #d4d0c8;
+  /*  border: 2px groove; */
+  }
+  
+  input[type="radio"] {
+    margin: 5px;
+  }
+  
+  label {
+    font-family: "MS UI Gothic", sans-serif;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    background-color: #d4d0c8;
+    border: 2px solid #808080;
+    padding: 5px;
+    margin-bottom: 5px;
+    box-shadow: inset 1px 1px white, inset -1px -1px gray;
+  }
+  
+  label:hover {
+    background-color: #e4e0dc;
+  }
+
+  input[type="text"] {
+    width: 200px;
+    height: 25px;
+    padding: 2px;
+    background-color: #ffffff; /* グレーの背景色 */
+    border: 2px solid #808080; /* グレーのボーダーでWindows風に */
+    box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #000000; /* 立体感を追加 */
+    font-family: "MS UI Gothic", sans-serif; /* Windows 95/98風のフォント */
+    font-size: 12px;
+    color: black;
+  }
+  
+  input[type="text"]:focus {
+    outline: none; /* フォーカス時のデフォルトの枠を削除 */
+    border: 2px solid #000080; /* フォーカス時のボーダーを濃い青に */
+  }
+  
+  input[type="text"]:hover {
+    border-color: #808080; /* ホバー時のボーダー */
+  }

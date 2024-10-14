@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@5.3.6/dist/simplebar.min.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/simplebar@5.3.6/dist/simplebar.min.js"></script>
+    <title>オムライス登録</title>
+    <style>
+        .content {
+            padding: 10px;
+            overflow-y: scroll; /* 常にスクロールバーを表示 */
+            font-size: 14px;
+            background-color: rgb(221, 221, 221);
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch; /* iOSでのスムーズスクロール */
+        }
+        main {
+            padding: 10px;
+            overflow-y: scroll; /* 常にスクロールバーを表示 */
+            font-size: 14px;
+            background-color: rgb(221, 221, 221);
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch; /* iOSでのスムーズスクロール */
+        }
+        .text label, input {
+            display: inline-block;
+            margin-right: 10px; /* ラベルと入力欄の間に余白を追加 */
+        }
+        .file-upload label, input {
+            display: inline-block;
+            margin-right: 10px; /* ラベルと入力欄の間に余白を追加 */
+        }
+
+        .text input {
+            width: 200px; /* 入力欄の幅を調整 */
+        }
+        .input-window form {
+            background-color: rgb(221, 221, 221);
+        }
+        .complete-message {
+            display: none;
+            padding: 10px;
+            margin-top: 10px;
+            border: 2px solid #808080;
+            background-color: #d4d0c8;
+            box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #000000;
+            font-size: 12px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="window">
+        <div class="title-bar">
+            <span class="title">OmuQue Manager</span>
+            <div class="buttons">
+                <button class="minimize">-</button>
+                <button class="close">x</button>
+            </div>
+        </div>
+        <div class="content" data-simplebar data-simplebar-auto-hide="false">
+            <header>オムライス登録</header>
+            <main>
+                <form id="uploadForm" method="post" enctype="multipart/form-data">
+                    <!-- 駅のテキスト入力 -->
+                    <div class="text">
+                        <label for="station">駅名:</label>
+                        <input type="text" name="station" id="station" required>
+                    </div>
+
+                    <!-- 卵の種類 -->
+                    <div class="choices">
+                        <p>卵の種類：</p>
+                        <label>
+                            <input type="radio" name="egg" value="5"> しっかり焼いた薄焼き卵 <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="egg" value="3"> バターたっぷりふわトロ <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="egg" value="1"> 野菜などが入っている <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="egg" value="0"> その他 <br>
+                        </label>
+                    </div>
+
+                    <!-- ライスの種類 -->
+                    <div class="choices">
+                        <p>ライスの種類：</p>
+                        <label>
+                            <input type="radio" name="rice" value="10"> チキンライス <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="rice" value="5"> ケチャップライス <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="rice" value="2"> ピラフ <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="rice" value="0"> 白飯 <br>
+                        </label>
+                    </div>
+
+                    <!-- ソースの種類 -->
+                    <div class="choices">
+                        <p>ソースの種類：</p>
+                        <label>
+                            <input type="radio" name="sauce" value="5"> ケチャップ <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="sauce" value="4"> ケチャップベースのソース <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="sauce" value="2"> デミグラスソース <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="sauce" value="0"> その他 <br>
+                        </label>
+                    </div>
+
+                    <!-- 画像アップロードフィールド -->
+                    <div class="file-upload">
+                        <label for="file">画像をアップロード：</label>
+                        <input type="file" id="file" name="file" accept="image/*" required>
+                    </div>
+
+                    <!-- 送信ボタン -->
+                    <div class="button-container">
+                        <input type="submit" value="送信" class="button">
+                    </div>
+                </form>
+                <dev id="completeMessage" class="complete-message">完了しました</div>
+            </main>
+            <footer>(c) OmuQuest</footer>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // ファイルアップロード処理をシミュレート（ここに実際の処理を追加）
+            setTimeout(function () {
+                // アップロード完了後に完了メッセージを表示
+                document.getElementById('completeMessage').style.display = 'block';
+            }, 1000); // 1秒後に完了表示
+        });
+/*
+        document.querySelector('form').addEventListener('submit', async (event) => {
+
+            const formData = new FormData(event.target);
+
+            // 画像ファイルを取得
+            const fileInput = document.querySelector('#file');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = async () => {
+                    const imageData = reader.result; // Base64に変換された画像
+
+                    // フォームデータと画像データをサーバーに送信
+                    const response = await fetch('/.netlify/functions/upload', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            station: formData.get('station'), // 駅名をテキストで取得
+                            egg: formData.get('egg'),
+                            rice: formData.get('rice'),
+                            sauce: formData.get('sauce'),
+                            fileName: file.name, // ファイル名を取得
+                            image: imageData // Base64に変換された画像データ
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    const result = await response.json();
+                    console.log(result.message);
+                };
+
+                reader.readAsDataURL(file); // 画像をBase64に変換
+            }
+        });
+*/
+    </script>
+</body>
+</html>

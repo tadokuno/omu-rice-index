@@ -9,7 +9,7 @@ const config = {
 };
 
 // 駅の緯度経度を取得する関数
-async function getCoordinates(stationName) {
+export async function getCoordinates(stationName) {
     const apiKey = process.env.GOOGLE_API_KEY;
     const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(stationName)}&key=${apiKey}`;
 console.log(geocodeUrl);    
@@ -24,8 +24,8 @@ console.log(geocodeUrl);
     }
 }
 
-const exclusionCafe = ["TULLY’S COFFEE","タリーズコーヒー","カフェ・ベローチェ","椿屋カフェ","カフェ・ド・クリエ","ドトールコーヒーショップ","サンマルクカフェ","エクセルシオール"];
-const exclusionRestraunt = ["日高屋","バーミヤン"];
+const exclusionCafe = ["ルノアール","TULLY’S COFFEE","タリーズコーヒー","カフェ・ベローチェ","椿屋カフェ","カフェ・ド・クリエ","ドトールコーヒーショップ","サンマルクカフェ","エクセルシオール"];
+const exclusionRestraunt = ["揚州商人","銀座アスター","日高屋","バーミヤン","つばめグリル","オムサコライス","やよい軒","ロイヤルホスト","俺のハンバーグ","卵と私","ポムの樹","洋麺屋五右衛門","ガスト","中華食堂 一番館","三九厨房"];
 
 // Nearby Search APIを使用して店舗数を取得する関数
 async function getAllPlaceCount(lat, lng, tpy, kwd, radius, exclusion) {
@@ -148,13 +148,8 @@ async function getAllPlaceCount2(lat, lng, tpy) {
 //
 //
 //
-export async function getOmuIndexCountable (stationName) {
+export async function getOmuIndexCountable (stationName,lat,lng) {
     try {
-        // 駅の緯度経度を取得
-        const location = await getCoordinates(stationName);
-        const lat = location.lat;
-        const lng = location.lng;
-
         // 緯度経度から指定した範囲内の店舗数を取得
         const localCafe = await getAllPlaceCount(lat, lng, "cafe","local",300,exclusionCafe);
         const chineseRestaurant = await getAllPlaceCount(lat, lng, "restaurant",encodeURIComponent("町中華"),300,exclusionRestraunt);
@@ -163,9 +158,6 @@ export async function getOmuIndexCountable (stationName) {
 
         // 結果をオブジェクトとして返す
         return {
-            stationName: stationName,
-            lat: lat,
-            lng: lng,
             localCafe: { count: localCafe.count, message: localCafe.message },
             chineseRestaurant: { count: chineseRestaurant.count, message: chineseRestaurant.message},
             westernRestaurant: { count: westernRestaurant.count, message: westernRestaurant.message},

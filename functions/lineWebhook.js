@@ -1,5 +1,6 @@
 import * as line from '@line/bot-sdk';
 import { omuIndexMain } from './script.js';
+import { createLineMesasge } from './script.js';
 
 const config = {
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
@@ -29,9 +30,10 @@ export async function handler(event, context) {
 
       try {
         const result = await omuIndexMain(stationName);
+        const message = createLineMesasge(stationName,result.googlemap,result.openai,result.index);
 	      const replyMessage = {
           type: 'text',
-	        text: `${result}`
+	        text: `${message}`
 	      };
        	await client.replyMessage(singleEvent.replyToken, replyMessage);
       } catch (error) {

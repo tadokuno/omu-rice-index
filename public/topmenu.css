@@ -1,0 +1,248 @@
+body, div, dl, dt, dd, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, ul {
+    margin: 0;
+    padding: 0;
+}
+body, button, input, select, textarea {
+    font-size: 100%;
+}
+img {
+    vertical-align: top;
+    font-size: 0;
+    line-height: 0;
+  }
+* {
+-webkit-box-sizing: border-box;
+-ms-box-sizing: border-box;
+-o-box-sizing: border-box;
+box-sizing: border-box;
+}
+*:before, *:after {
+-webkit-box-sizing: border-box;
+-ms-box-sizing: border-box;
+-o-box-sizing: border-box;
+box-sizing: border-box;
+}
+body {
+    font: 500 16px/1.8 "游ゴシック", "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, "ＭＳ ゴシック", sans-serif;
+    color: #21201c;
+    text-align: left;
+    letter-spacing: 1px;
+}
+ul, ol {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    color: #383838;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+a:link, a:active, a:visited {
+    text-decoration: none;
+}
+
+#container_wrap{
+    display: flex;
+    height: 100vh;
+}
+
+#container_wrap .header{
+    width: 25%;
+    height: 100%;
+    position: relative;
+    background-color: aqua;
+    border-right: double 5px grey;
+}
+
+#container_wrap .contents {
+    width: 75%;
+    height: 100%;
+    background-color: aqua;
+    text-align: center;
+    position: relative;
+    background-image: url('images/star.png');
+    background-size: 30px 30px;
+    background-repeat: repeat; /* 繰り返し設定 */
+}
+
+
+
+.main_ttl{
+    font-size: 2rem;
+    font-style: italic;
+}
+
+.counter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+
+.m30{
+    color: rgb(75, 2, 2);
+    margin-bottom: 1.875rem;
+}
+.m50{
+    margin-bottom: 3.125rem;
+}
+#gnavi{
+    width: 100%;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+}
+#gnavi ul{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#gnavi ul li{
+    margin-bottom: .625rem;
+}
+#section_1,
+#section_2,
+#section_3{
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+}
+
+.toggle{
+    display: none;
+}
+.Label{
+    cursor: pointer; 
+    color: blue;
+    text-decoration:underline;
+}
+#gnavi ul li .Label:hover{
+    color: black;
+}
+
+.list_banner{
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.banner1{
+    width: 120px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: chartreuse;
+    font-size: 1.25rem;
+    font-weight: 800;
+    font-style: italic;
+}
+
+.banner2{
+    width: 120px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+    color: #fff;
+    font-size: .9rem;
+    font-weight: 800;
+    font-style: italic;
+    line-height: 1.3;
+}
+
+.txt_b{
+    font-weight: 800;
+}
+
+.bbs{
+    font-size : 1.875rem;
+    font-weight: bold;
+    color: blue;
+}
+
+
+.text_attention{
+    margin : auto;
+    width : 100%;
+    font-size : 1.25rem;
+    font-weight: 800;
+    text-align : center;
+    overflow : hidden;
+    color: black;
+}
+.text_attention p{
+    margin:0;
+    display : inline-block;
+    padding-left: 100%;
+    white-space : nowrap;
+    line-height : 1em;
+    animation : scrolltxt 8s linear infinite;
+}
+@keyframes scrolltxt{
+    0% { transform: translateX(0)}
+    100% { transform: translateX(-100%)}
+    }
+
+.attention{
+    font-weight: bold;
+    color: red;
+    font-size : 1.125rem;
+}
+
+.blink {
+    animation: blinking .2s ease-in-out infinite alternate;
+}
+@keyframes blinking {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+.niji span:nth-of-type(1),
+.niji span:nth-of-type(12){
+    color: blueviolet;
+}
+.niji span:nth-of-type(2),
+.niji span:nth-of-type(13){
+    color: darkviolet;
+}
+.niji span:nth-of-type(3),
+.niji span:nth-of-type(14){
+    color: blue;
+}
+.niji span:nth-of-type(4),
+.niji span:nth-of-type(15){
+    color: green;
+}
+.niji span:nth-of-type(5),
+.niji span:nth-of-type(16){
+    color: rgb(255, 109, 47);
+}
+.niji span:nth-of-type(6),
+.niji span:nth-of-type(17){
+    color: yellowgreen;
+}
+.niji span:nth-of-type(7),
+.niji span:nth-of-type(18){
+    color: yellow;
+}
+
+.niji span:nth-of-type(8){
+    color: orange;
+}
+.niji span:nth-of-type(9){
+    color: orangered;
+}
+.niji span:nth-of-type(10){
+    color: red;
+}
+.niji span:nth-of-type(11){
+    color: fuchsia;
+}
+

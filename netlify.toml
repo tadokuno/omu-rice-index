@@ -1,5 +1,6 @@
 [build]
-  functions = "functions"
+  publish = "public"  # HTML、CSSなどを配置する公開ディレクトリ
+  functions = "functions"  # Netlify Functionsのコードを置くディレクトリ
 
 [[redirects]]
   from = "/webhook"

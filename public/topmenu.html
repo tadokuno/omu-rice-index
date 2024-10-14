@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+
+<meta name="description" content="" />
+<meta http-equiv="content-style-type" content="text/css" />
+<meta http-equiv="content-script-type" content="text/javascript" />
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>オムクエのホームページ</title>
+<link rel="stylesheet" href="topmenu.css" media="all" />
+</head>
+
+<body>
+
+    <div id="container_wrap">
+        <header class="header">
+            <nav id="gnavi">
+                <ul>
+                  <li><input id="block-01" type="radio" name="menu" class="toggle" onclick="select_menu()" checked>
+                    <label class="Label" for="block-01">トップページ</label></li>
+                  <li><input id="block-02" type="radio" name="menu" class="toggle" onclick="select_menu()">
+                    <label class="Label" for="block-02">オムクエについて</label></li>
+                  <li><input id="block-03" type="radio" name="menu" class="toggle" onclick="select_menu()">
+                    <label class="Label" for="block-03">工事中</label></li>
+                </ul>
+              </nav>
+
+        </header>
+        <div class="contents">
+            <section id="section_1">
+                <h1  class="main_ttl niji"><span>昔</span><span>な</span><span>が</span><span>ら</span><span>の</span></h1> 
+                <h1  class="main_ttl niji"><span>オ</span><span>ム</span><span>ラ</span><span>イ</span><span>ス</span><span>の</span></h1> 
+                <h1  class="main_ttl niji"><span>世</span><span>界</span><span>へ</span><span>よ</span><span>う</span><span>こ</span><span>そ</span></h1> 
+                <p class="counter m30">あなたは<img alt="アクセスカウンター画像">人目のお客様です</p>
+                <div class="m30">
+                <div class="text_attention">
+                  <p>↓続きはこちら↓</p>
+               </div>
+                <ul class="list_banner">
+                  <li>
+                    <a href="map.html" class="banner1">オムライス指数を見る</a>
+                  </li>
+                  <li>
+                    <a href="omuregist.html" class="banner2">オムライス情報の<br>登録</a>
+                  </li>
+                </ul>
+            </section>
+            <section id="section_2">
+              <h2  class="main_ttl niji m50"><span>こ</span><span>の</span><span>ホ</span><span>ー</span><span>ム</span><span>ペ</span><span>ー</span><span>ジ</span><span>に</span><span>つ</span><span>い</span><span>て</span></h2> 
+              <p class="txt_b m30">このホームページはフレーム要素を使っているように見えて、<br>実はフレームは使っていません！</p>
+              <p class="txt_b">さらに訪問者をカウンターでカウントしているようにみせかけて<br>まったくカウントしていません！！</p>
+              <div class="text_attention">
+                 <p class="niji"><span>カ</span><span>ウ</span><span>ン</span><span>ト</span><span>し</span><span>て</span><span>い</span><span>ま</span><span>せ</span><span>ん</span></p>
+              </div>
+            </section>
+            <section id="section_3">
+              <h2  class="main_ttl m50">工事中</h2> 
+            </section>
+           </div>
+    </div>
+    <script>    
+        document.oncontextmenu = function() { alert("右クリック禁止"); return false; }
+        function select_menu() {
+           menu = document.getElementsByName('menu')
+           if (menu[0].checked) {
+               document.getElementById('section_1').style.display = "";
+               document.getElementById('section_2').style.display = "none";
+               document.getElementById('section_3').style.display = "none";
+           } else if (menu[1].checked) {
+               document.getElementById('section_1').style.display = "none";
+               document.getElementById('section_2').style.display = "";
+               document.getElementById('section_3').style.display = "none";
+           } else {
+             document.getElementById('section_1').style.display = "none";
+               document.getElementById('section_2').style.display = "none";
+               document.getElementById('section_3').style.display = "";
+           }
+       }
+       window.addEventListener('load', select_menu());
+    </script>
+</body>
+
+</html>

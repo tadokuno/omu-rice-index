@@ -1,0 +1,50 @@
+{
+  "index": 58,
+  "stationName": "町田駅",
+  "lat": 35.5439695,
+  "lng": 139.4450788,
+  "googlemap": {
+    "localCafe": {
+      "count": 3,
+      "message": "The CAFE\nTHISONE\n倉式珈琲店 シエロ町田店\n"
+    },
+    "chineseRestaurant": {
+      "count": 27,
+      "message": "無名軒\n中華一番 町田中央店\n風香園 町田店\n西遊記\n横濱一品香 マルシェ町田店\nダイニング 貫\n中華料 理 味蔵 町田店\n蜀味軒\n南国亭 町田本店\n中国酒家 十年 町田本店\n大連餃子基地DALIAN町田店\n熱血食堂すわ\n創作中華 清の\n向陽飯店 町田店\nぎょうざの満洲 町田パリオ店\nDINING BAR SUU\n全品300円 中華酒場 三百楽 町田店\n中国料理 龍皇\n小陽生 煎饅頭屋\n餃子製造直販 餃山堂\n横浜 昇龍園 町田東急ツインズ店\n山王菜館\nら～めん源\nラーメンと餃子の店 水岡\n肉汁餃子 のダンダダン 町田店\n焼売のジョー町田店\n町田商店 本店\n"
+    },
+    "westernRestaurant": {
+      "count": 35,
+      "message": "グリルママ\n洋食麦星 byグリル満天星 小田急町田店\nBistro Chez Riki\nいしがまやハンバーグ 町田東急ツインズ\n3 Little Eggs 町田東急ツインズ店\n洋食航旅莉屋\nステーキのくいしんぼ 町田東口店\nペダラーダ\nTGI FRIDAYS 町田店\nポポラマーマ_バル 町田店\nデニーズ 町田南口店\n鉄板王国 町田店\n鎌倉パスタ 町田東急ツインズ店\nバケット 町田東急ツイン ズ店\nイタメシヤ Bonito 町田\nカプリチョーザ 町田モディ店\nイタリアンダイニングDONA 町田店\nCONA 町田店\nイルバッコ （il Bacco）町田市イタリアン\nmanon classic\nいしかわ屋\n薪焼ステーキ コケット\nコシード デ ソル\nEPIC\nレストランバー緑山\nエルヴェッタ（Erbetta）\nくいのみ屋とき\nジーニーズ 町田店\nグリルやまだ 町田店\nSTRI ストリ 町田\nオステリア デコ OSTERIA DECO\nパステル ルミネ町田店\n地中海料理コシード（COCIDO)\nTrattoria Beare（トラットリア ベアーレ）\n鉄重 町田店\n"
+    },
+    "snack": {
+      "count": 60,
+      "message": "karaoke bar azure\nステージ町田\n２５時\nBlue Rose\nBar Lounge Beauté(バーラウンジ ボーテ)\n親乙(ちかおと)\nプリマベーラ\nNoフリル\nGROVE (グローブ)\nみや\nラウンジバーノエル\nIMU\nパブ W\nスナック⭐︎ちえ\nびーち\nパブ  リラ (スナック)\nLiz&Lisa\n町田ガールズバーS（エス）\netoile(エトワール)\n町田ヒットパレード\n艶en（エン）\nカプリ２\n スナックフロンティア\nＺＯＯ\nLa Stella （ラ ステラ）\nBull BAR\n町田ガールズバーM（エム）\nバー光琳\nGirl's Bar L\nsnack わむ〜る\nバー エルアクアリオ\n楽々\nひまわり２\nKaraoke BAR EARTH(アース)\n町田ガールズバーVANILLA（ヴァニラ）\nア ンティックス\nHUB町田店\nカラオケパブ ヘブン\n町田ガールズバー【MUSES（ミューゼス）】\nArtemis\nスナック山猫\nsnack Takauchi\nBar Kanoa\nクレヨン\n五花〜ITSUKA〜\nホームバー ニコワミ\nルベウス\nガールズバー Lazuli（ラズリ）\nラウンジバー 優月\nLa Tierra\nGirls Bar MeteoR (ミーティア)\nLino\nBPR 3rd Season\nおかずスナック さるびあ亭\nBar Rei\nサントリーバ ー山崎\nダーツバー＆カラオケバー ZINO（ジーノ）町田店\nカラオケバーOCEAN\nエルドラッド\nまほろ座 MACHIDA\n"
+    }
+  },
+  "openai": {
+    "shoutengai": {
+      "index": 6,
+      "text": "町田駅周辺には商店街があるが、現代化と共に大型店も多い。古い商店街の雰囲気はあるが、その一部に限る。"
+    },
+    "michi": {
+      "index": 4,
+      "text": "町田駅の周辺は商業地として整備されており、入り組んだ道はあまり見られない。"
+    },
+    "furuiMise": {
+      "index": 5,
+      "text": "古い店は一部に見られるが、多くは新しい店舗に置き換わっている傾向がある。"
+    },
+    "shokuSample": {
+      "index": 3,
+      "text": "現代的な店舗が多く、古いショーケースや食品サンプルはほとんど見かけない。"
+    },
+    "building": {
+      "index": 4,
+      "text": "建物は比較的新しく、古い形式のビルは少ない。"
+    },
+    "chain": {
+      "index": 3,
+      "text": "町田は商業の中心として全国チェーンの店舗が多く、地域独自の店は少なめ。"
+    }
+  }
+}

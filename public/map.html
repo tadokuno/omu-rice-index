@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@5.3.6/dist/simplebar.min.css"/>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/simplebar@5.3.6/dist/simplebar.min.js"></script>
+
+  <title>オムライス指数マップ</title>
+  <style>
+    .window {
+      border: 2px solid black;
+      background-color: #FFFFFF;
+/*      box-shadow: 3px 3px #808080; */
+      position: relative;
+      overflow: hidden; 
+    }
+
+    .title-bar {
+      background-color: #000080;
+      color: white;
+      padding: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title {
+      font-size: 14px;
+    }
+
+    /* マップのサイズを指定 */
+    #map {
+      height: 50vh;
+      width: 100%;
+    }
+
+    /* オムライス指数リストのスタイル */
+    #omurice-list {
+      overflow-y: scroll;
+      border: 1px solid #ccc; /* 見やすさのためにボーダーを追加（任意） */
+      padding: 10px;
+      background-color: #f0f0f0;
+    }
+
+    .content {
+      padding: 10px;
+      height: 260px; /* タイトルバーの分を引いた高さ */
+      overflow-y: scroll; /* 常にスクロールバーを表示 */
+      font-size: 12px;
+      background-color: white;
+      box-sizing: border-box;
+      -webkit-overflow-scrolling: touch; /* iOSでのスムーズスクロール */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #333;
+      color: white;
+    }
+  </style>
+  <!-- Leaflet.jsのCSSを読み込み -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+  <div class="window">
+    <div class="title-bar">
+      <span class="title">OmuQue Manager</span>
+      <div class="buttons">
+        <button class="minimize">-</button>
+        <button class="close">x</button>
+      </div>
+    </div>
+    <div id="map"></div>
+    <div class="content" data-simplebar data-simplebar-auto-hide="false">
+      <div id="omurice-list">
+      <table>
+        <thead>
+          <tr>
+            <th>駅名</th>
+            <th>オムライス指数</th>
+          </tr>
+        </thead>
+        <tbody id="station-list">
+          <!-- 駅とオムライス指数がここに動的に表示されます -->
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet.jsのJavaScriptを読み込み -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    let map;
+
+    // Leafletマップの初期化
+    function initMap() {
+      // 東京駅を初期中心に設定
+      map = L.map('map').setView([35.681236, 139.767125], 12);
+
+      // OpenStreetMapのタイルレイヤーを追加
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // 駅データを取得してマップに表示
+      fetchStationData();
+    }
+
+    // 駅データの取得（ここでは一例として静的なデータを使用）
+    function fetchStationData() {
+      const stations = [
+        { name: '麻布十番駅', lat: 35.658033, lng: 139.701636, omuriceIndex: 31 },
+        { name: '四谷駅', lat: 35.685372, lng: 139.7287997, omuriceIndex: 31 },
+        { name: '中目黒駅', lat: 35.6441631, lng: 139.6988444, omuriceIndex: 29 },
+        { name: '東京駅', lat: 35.681236, lng: 139.767125, omuriceIndex: 27 },
+        { name: '新宿駅', lat: 35.690921, lng: 139.700257, omuriceIndex: 27 },
+        { name: '渋谷駅', lat: 35.658033, lng: 139.701636, omuriceIndex: 27 },
+        // 他の駅データを追加
+      ];
+      // 駅の位置にマーカーを表示し、リストを更新
+      updateMapAndList(stations);
+    }
+
+    // 駅のデータを基にマップとリストを更新
+    function updateMapAndList(stations) {
+      const stationList = document.getElementById('station-list');
+      stationList.innerHTML = ''; // 既存のリストをクリア
+
+      stations.forEach(station => {
+        // マップにマーカーを追加
+        const marker = L.marker([station.lat, station.lng]).addTo(map);
+        marker.bindPopup(`<b>${station.name}</b><br>オムライス指数: ${station.omuriceIndex}`);
+
+        // リストにオムライス指数を追加
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${station.name}</td><td>${station.omuriceIndex}</td>`;
+        stationList.appendChild(row);
+      });
+    }
+
+    // ページ読み込み時にマップを初期化
+    window.onload = initMap;
+  </script>
+</body>
+</html>

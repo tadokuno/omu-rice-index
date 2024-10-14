@@ -1,0 +1,236 @@
+omuIndexMain Start
+openai call
+https://maps.googleapis.com/maps/api/geocode/json?address=%E7%94%BA%E7%94%B0%E9%A7%85&key=AIzaSyBLhDc1I6CQmq8ee0FmaUMChpBTs40AmgM
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.5439695,139.4450788&radius=300&type=cafe&key=AIzaSyBLhDc1I6CQmq8ee0FmaUMChpBTs40AmgM&language=ja&keyword=local
+現在の店舗数: 4件
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.5439695,139.4450788&radius=300&type=restaurant&key=AIzaSyBLhDc1I6CQmq8ee0FmaUMChpBTs40AmgM&language=ja&keyword=%E7%94%BA%E4%B8%AD%E8%8F%AF
+現在の店舗数: 18件
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.5439695,139.4450788&radius=300&type=restaurant&key=AIzaSyBLhDc1I6CQmq8ee0FmaUMChpBTs40AmgM&language=ja&keyword=%E7%94%BA%E4%B8%AD%E8%8F%AF&pagetoken=AdCG2DMWbW6d-mBhYMm-Pt7rxogRik0q97SQLdaTf7r46tkos4KoC8ki_6xz235A7c_qcIyxRjv2FdAyecwc8CtNP2EsaEJfSHjswHLvRDIpHN-wRwrlPINW4jCkKII0CLL0WIhGw4mblxltipPRqmacriKEnuhlLrQ_rrsYrs_m7BAjG5aRRP_7G9eT7RIPcfGYyDG4OBZx7fw5rbOBrE6G2Gixyt7yvYcU9jrDowhNrmNrjP2cDKZ8t-OKUQZTMjsr5hkR8WrJ2zfYiFrFr_eQ1wKF_s-g24uE2ZlVmSQQU0yHw1Fc815z12infqPZPQtA8qi4wcJBQCiHRCzXwroPQJ1F7g5d0Tn6mJwNmxlOR6cbBwyz4MPCGjubrREgevabTzInL559fJG9R2Pn0F9BWEc-LLbtp_Hhq0i873O5NXLK9OLcvJoHh0EVrK_gjy0nZcSIWoY
+現在の店舗数: 27件
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.5439695,139.4450788&radius=300&type=restaurant&key=AIzaSyBLhDc1I6CQmq8ee0FmaUMChpBTs40AmgM&language=ja&keyword=%E6%B4%8B%E9%A3%9F%E5%B1%8B
+現在の店舗数: 19件
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.5439695,139.4450788&radius=300&type=restaurant&key=AIzaSyBLhDc1I6CQmq8ee0FmaUMChpBTs40AmgM&language=ja&keyword=%E6%B4%8B%E9%A3%9F%E5%B1%8B&pagetoken=AdCG2DMAEa2Z7L6YTAP4AucOaWIlSwBAI8nJ7p02gC1kPLNyqsmL81zYWIF6qfcR9wnHq-__SwRViK-oqNh4xBpKjU-U99OvLXVCbwHRN6ZFl61j_mHOsoBu9tAHDjwoO7Dw2_Esw5N91p7H777h0b0_HZ6VuoVrb3Wdwxr1qzXioOgBMLYs5WStiq3c3UAXBCPzuQp42QHc8TNbcCAz9ZvQs1_vrTqrN8gcgi0AX5PoRhvRbiXEGldMx1xoQClnGrUmbVgTDuiOvY3zM9aOSEsu7DPvypPz7dfXCibDaDuuXh9CCuha0pkujgmrTxV1ZpkM50XNXDz86YA7G7XPxfV3fyLTkslMJWWNVBn2HbOUkki1SFHv-Vv2xLsQ9tH9rUg_3a7tfUdsLvJX_Wv3x4rSqeZUsMXYLe9HUlRKqqatwVNG-g1IuAkqhlq9zwsYMgw7439fLdQ
+現在の店舗数: 39件
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.5439695,139.4450788&radius=300&type=restaurant&key=AIzaSyBLhDc1I6CQmq8ee0FmaUMChpBTs40AmgM&language=ja&keyword=%E6%B4%8B%E9%A3%9F%E5%B1%8B&pagetoken=AdCG2DOjfEh3jbBRVFXuSgm2-OzCoUy9v25U-Ks16GkP_ozqQUqoEhOA5XCZ4EpNyTpPyeTZZ6WesSBd_n1B3GFYWFHkzpJr9yIC6cpAyCSIHPZ90oa4I6f-Sst4dI5eBrfcjFIh7g4xmq9G7NBv9pG-rxLemYbrP7h4ecQTAlAGTrOrW36s8VIA5bXui_F_abA8w5pB6PC0syLG9z93AR6qh8oXLBY5kIePL-OSpcK3JP7FUIguRc5pxmxvYen4jRYvJxpQFIwGhMy4VCXM8Atf_IC8o_DNjX520SMVnnwIgYuldJm031SGaKm7xqjpsgNaI5kIeL0Q86met7qlYtlRnbU6GvM8re6NVChJh1Cvkoz6W31cMQTS0inEejpCVFCLDRGWSDHYioAv_8szMARful0ZAVJEEJbd12vsJiHxmkHuUuz-Z7k4ybV5TlkbD9Dp2BJBwFm9zDMgp4e0LtgIWiR3bNcNR9lmMIwKP5wbXj7GpVxHBgDr369Xs0b_HH5aNos-Kh-ffozwljLnImBgWfKYN4aGiYq4AZtOg7TDH021inKsWjKfeO9CqE_7BuCY1754ZI2_09F5Y1H1T1Gb-t1dIqSL6w0T9eI9BbzWZ8O2_6aRfqq1exun7KV4kyFpDOcGkff7QZIQ174A8rJYygarF234
+現在の店舗数: 54件
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.5439695,139.4450788&radius=300&type=bar&key=AIzaSyBLhDc1I6CQmq8ee0FmaUMChpBTs40AmgM&language=ja&keyword=%E3%82%B9%E3%83%8A%E3%83%83%E3%82%AF
+現在の店舗数: 20件
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.5439695,139.4450788&radius=300&type=bar&key=AIzaSyBLhDc1I6CQmq8ee0FmaUMChpBTs40AmgM&language=ja&keyword=%E3%82%B9%E3%83%8A%E3%83%83%E3%82%AF&pagetoken=AdCG2DNaEBxerAz_h_8JesqAJ1y69BSgzrbFP44xuTatpg6XWAbZ674KXAHOmtdTxP-ni1MYmR6IGrE3WUdxBmRHOn-LPEBdAPDkIGtYfTsK198KXPEJjYsx6Ou6yzVcj_2JwMaSfCvnZdSbgHahDjo9yMb7WgSnaIYltWX8T_OAmOyLDqfIMd78I_M-6TWPLUAxIs0l_GVcD1ZhCgI6-CowHmFT-1yxsXONOGUpqB3hbtz7rslqYOe8VzUwiu2udj7NXxSmiG_G_14NvaHNajSZyzEWr24W6_UtAveusFt-65gpkW3WCArW1aaJq0m4qzeShH7lll0Jl330EXP-jcC-b7l2U_XLlvU4nIZa5g_pVcYhID39ceR6-FXrQ6_qvs_DVUmc47VOdSHesbAseI8qTBNjJcrfxIND4J16gGQyl78NE95XAjNrkls2abZ-oZQ38A
+現在の店舗数: 40件
+https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=35.5439695,139.4450788&radius=300&type=bar&key=AIzaSyBLhDc1I6CQmq8ee0FmaUMChpBTs40AmgM&language=ja&keyword=%E3%82%B9%E3%83%8A%E3%83%83%E3%82%AF&pagetoken=AdCG2DNSOebXO8CGHiOu3W0pJZw0Im7rxErdZBkWYJ1CmxO5pbjC-PZo8NIDhpQNICbGjZRltKouGL1q9vzh2avio5Y89MFdsCZQO6H0iLusxkWULcp1-r5Ht3gMv2yuAmBAhO7Rh0hhFsRWqiQthlAeyvzaAwHzsGcLMy-R5lCYduKLtPtzvHDf_m_IvB4vn_9CaxaGyACjntygx-kXpbaV26YA3AF9UEpczWwv6GUO-M1OdiputgQJuwv5FGLr1kw5kJaNYPnEDi7eVb8at6RDnD1VcMZUyi62R6__UzwQhg8xcahaaQ4ZVhVc2Ua2zjSJre6l_cuNvFPnThZsw13QQNe6ZkqrbI1AkQLNrCeu13hf4oFwol6KK8vg2XDm3g2yTYHZw8MdXISe_ARJeylurycjCXCBCew0Jt2wpcmWH1eku5rWr_0rLoy2IQlnt5grDUT1gNq31zOHnfzPxETEZkaI1eb1wZN0UOIj_MXynPOsetBhV_Q02CbgfP73GHlf5gYti5bWz2715Z3sfdvlU6UO7UC-ozKjVTakrhMsyntv4mrjVHgBwABdSvuMozWrUPbtxC7Q0diBQ9d8IxlXVlLoFnWvqhnlqLhybKoqIOU9WH5RFhtOVhNe5vDs5-AGCym_Yk6UShF2au_ugM5mmT0
+現在の店舗数: 60件
+{
+  index: 71,
+  stationName: '町田駅',
+  googlemap: {
+    stationName: '町田駅',
+    lat: 35.5439695,
+    lng: 139.4450788,
+    localCafe: {
+      count: 4,
+      message: 'THISONE\n倉式珈琲店 シエロ町田店\nThe CAFE\nカフェ ガレスピー\n'
+    },
+    chineseRestaurant: {
+      count: 27,
+      message: '無名軒\n' +
+        'ダイニング 貫\n' +
+        '庄や町田本家店\n'
+    },
+    westernRestaurant: {
+      count: 54,
+      message: 'グリルママ\n' +
+        '洋食航旅莉屋\n' +
+        'トロピカルダイニングバージュシー 東京都町田市原町田6-24-17町田ムセンビル3FB\n'
+    },
+    snack: {
+      count: 60,
+      message: 'ステージ町田\n' +
+        'Liz&Lisa\n' +
+        'まほろ座 MACHIDA\n'
+    }
+  },
+  openai: {
+    shoutengai: {
+      index: 7,
+      text: '町田駅周辺には古くからの商店街が残っており、地元の人々から親しまれていますが、再開発も進行中です。'
+    },
+    michi: { index: 6, text: '町田の一部地域では道が狭く入り組んでいる箇所もありますが、駅周辺の再整備が進んでいます。' },
+    furuiMise: { index: 8, text: '地域に根付いた昔ながらの商店や老舗のお店が多数存在し、地元の文化が感じられます。' },
+    shokuSample: {
+      index: 5,
+      text: '古い食品サンプルやショーケースは一部の店舗に見られますが、大多数は現代的な外観になっています。'
+    },
+    building: {
+      index: 7,
+      text: '駅周辺には昭和レトロな雰囲気を持つ飲食ビルがいくつか残っており、再開発との調和が見られます。'
+    },
+    chain: {
+      index: 4,
+      text: '全国に展開するチェーン店も多く、駅近くには特に集中しているため地域独自の店舗は相対的に少なめです。'
+    }
+  }
+}
+町田駅のオムライス指数: 71%
+
+喫茶店の数: 4件
+町中華の数: 27件
+洋食屋の数: 54件
+スナックの数: 60件
+7: 町田駅周辺には古くからの商店街が残っており、地元の人々から親しまれていますが、再開発も進行中です。
+6: 町田の一部地域では道が狭く入り組んでいる箇所もありますが、駅周辺の再整備が進んでいます。
+8: 地域に根付いた昔ながらの商店や老舗のお店が多数存在し、地元の文化が感じられます。
+5: 古い食品サンプルやショーケースは一部の店舗に見られますが、大多数は現代的な外観になっています。
+7: 駅周辺には昭和レトロな雰囲気を持つ飲食ビルがいくつか残っており、再開発との調和が見られます。
+4: 全国に展開するチェーン店も多く、駅近くには特に集中しているため地域独自の店舗は相対的に少なめです。
+
+THISONE
+倉式珈琲店 シエロ町田店
+The CAFE
+カフェ ガレスピー
+
+無名軒
+ダイニング 貫
+中華一番 町田中央店
+風香園 町田店
+西遊記
+中国酒家 十年 町田本店
+横濱一品香 マルシェ町田店
+中華料理 味蔵 町田店
+蜀味軒
+創作中華 清の
+南国亭 町田本店
+大連餃子基地DALIAN町田店
+熱血食堂すわ
+DINING BAR SUU
+向陽飯店 町田店
+ぎょうざの満洲 町田パリオ店
+小陽生煎饅頭屋
+中国料理 龍皇
+全品300円 中華酒場 三百楽 町田店
+山王菜館
+餃子製造直販 餃山堂
+横浜 昇龍園 町田東急ツインズ店
+ら～めん源
+焼売のジョー町田店
+ラーメンと餃子の店 水岡
+肉汁餃子のダンダダン 町田店
+庄や町田本家店
+
+グリルママ
+洋食航旅莉屋
+洋食麦星 byグリル満天星 小田急町田店
+Bistro Chez Riki
+いしがまやハンバーグ 町田東急ツインズ
+3 Little Eggs 町田東急ツインズ店
+いしかわ屋
+コシード デ ソル
+イルバッコ （il Bacco）町田市イタリアン
+薪焼ステーキ コケット
+ステーキのくいしんぼ 町田東口店
+レストランバー緑山
+manon classic
+ペダラーダ
+イタメシヤ Bonito 町田
+エルヴェッタ（Erbetta）
+鉄重 町田店
+ジーニーズ 町田店
+オステリア デコ OSTERIA DECO
+地中海料理コシード（COCIDO)
+Trattoria Beare（トラットリア ベアーレ）
+アレグロ コン ブリオ
+atri
+イタリアンダイニングDONA 町田店
+KICHIRI misceo
+ポポラマーマ_バル 町田店
+鉄板王国 町田店
+トラットリア シェ ラパン
+バケット 町田東急ツインズ店
+ビストロISOMARU 町田店
+ポルトガル料理とワイン Arvoreni アルヴォリーニ
+KENT（ケント）
+鎌倉パスタ 町田東急ツインズ店
+EPIC
+TGI FRIDAYS 町田店
+ワインダイニング 「街角グラス」 町田
+ESOLA（エソラ） 町田駅前店
+カプリチョーザ 町田モディ店
+SALVATORE CUOMO ＆ BAR 町田
+鉄板たかはし
+CONA 町田店
+くいのみ屋とき
+STRI ストリ 町田
+森のレストラン
+グリルやまだ 町田店
+パステル ルミネ町田店
+BROWNSTAR
+オステリア ウチェッロ OSTERIA UCCELLO
+デニーズ 町田南口店
+Kitchen & Bar NO.7
+鉄板焼 薊-Azami- 町田店
+igu&peace PATRON 町田
+テラマジカ
+トロピカルダイニングバージュシー 東京都町田市原町田6-24-17町田ムセンビル3FB
+
+ステージ町田
+Liz&Lisa
+パブ W
+karaoke bar azure
+カプリ２
+HUB町田店
+キリンシティ 町田店
+Noフリル
+おかずスナック さるびあ亭
+２５時
+Bar Lounge Beauté(バーラウンジ ボーテ)
+Blue Rose
+プリマベーラ
+親乙(ちかおと)
+GROVE (グローブ)
+ホームバー ニコワミ
+アイリッシュパブ キルデア
+サントリーバー山崎
+町田ガールズバーVANILLA（ヴァニラ）
+スナックフロンティア
+みや
+ラウンジバーノエル
+IMU
+スナック⭐︎ちえ
+びーち
+パブ リラ (スナック)
+町田ガールズバーS（エス）
+etoile(エトワール)
+町田ヒットパレード
+艶en（エン）
+PINERY
+ＺＯＯ
+La Stella （ラ ステラ）
+Bull BAR
+町田ガールズバーM（エム）
+バー光琳
+Girl's Bar L
+snack わむ〜る
+Girl's Cafe BASK
+バー エルアクアリオ
+楽々
+ひまわり２
+Karaoke BAR EARTH(アース)
+アンティックス
+カラオケパブ ヘブン
+町田ガールズバー【MUSES（ミューゼス）】
+Artemis
+クレヨン
+snack Takauchi
+スナック山猫
+ルベウス
+Bar Kanoa
+La Tierra
+ラウンジバー優月
+lounge masquerade
+Lino
+カラオケバーOCEAN
+五花〜ITSUKA〜
+ダーツバー＆カラオケバー ZINO（ジーノ）町田店
+まほろ座 MACHIDA
+
+
+町田駅のオムライス指数: 71%
