@@ -3,7 +3,7 @@ import 'dotenv/config';  // .envファイルから環境変数を読み込む
 import readline from 'readline';
 import keypress from 'keypress';
 
-import { getOmuIndex } from './placesApi.js';
+import { getOmuIndexCountable } from './placesApi.js';
 
 // キーボード入力を設定
 keypress(process.stdin);
@@ -36,7 +36,7 @@ if (!stationName) {
 // メイン処理
 (async () => {
     try {
-	const result = await getOmuIndex(stationName);
+	const result = await getOmuIndexCountable(stationName);
 
 console.log(result);
 	if( result ) {
