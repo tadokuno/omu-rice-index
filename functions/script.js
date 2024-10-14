@@ -51,7 +51,7 @@ export async function omuIndexMain(stationName) {
       googlemap: result1,
       openai: result2,
     }
-    console.log(JSON.stringify(result,null, 2));
+    // console.log(JSON.stringify(result,null, 2));
 
     await registerOmuriceIndex(stationName,result); // どんどん上書きしていく
 
