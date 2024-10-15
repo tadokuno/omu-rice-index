@@ -166,7 +166,7 @@ export async function fetchOmuriceIndexData(stationName) {
       .single();
 
     if (stationError) {
-      console.log("Cannot found station\n");
+      console.log(`Cannot found station: ${stationName}\n`);
       throw stationError;
     }
 
@@ -258,7 +258,7 @@ export async function fetchOmuriceIndexData(stationName) {
     return result;
 
   } catch (error) {
-    // console.error('Error fetching omurice index data:', error);
+    console.error('Error fetching omurice index data:', error);
     return null;
   }
 }
