@@ -1,7 +1,7 @@
 import { getCoordinates,getOmuIndexCountable } from './placesApi.js';
 import { calculateOmuIndex } from './openaiApi.js';
 import { registerOmuriceIndex } from './regOmuIndex.js';
-import { fetchOmuriceIndexData } from './regOmuIndex.js'
+import { fetchOmuriceIndexData,fetchStationMaster } from './regOmuIndex.js'
 
 const config = {
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
@@ -12,21 +12,35 @@ function roundCount(count) {
   return Math.floor(count>10?10:count);
 }
 
+export async function getOmuIndexByCord(lat,lng) {
+  // 座標が一致する駅を検索する ==> station_id
+  // 無ければ、最も近い駅を検索する。==> station_id
+  // station_id からオムライス指数を検索する。指数が未計算の場合、計算して登録する。
+}
+
 export async function omuIndexMain(stationName) {
+  // stationNameからstation_master上のデータを取得する。
+  const data = fetchStationMaster(stationName);
+  if( data == null ) { // マスターに登録されていない
+    return null;
+  }
+  data.foreach(station => {
+    station.result=getOmuIndexMain(station.station_name,station.station_id,station.lat,station.lng);
+  });
+  return data[0].result;
+}
+
+async function getOmuIndexMain(stationName,station_id,lat,lng) {
   try {
     let point = 0;
-    let messages='';
 
-    let result = await fetchOmuriceIndexData(stationName);
+    let result = await fetchOmuriceIndexData(stationName,station_id,lat,lng);
     if( result != null ) {
       return result;
     }
     const openaiPromise = calculateOmuIndex(stationName); // openai API 時間かかる
 
-    const location = await getCoordinates(stationName);
-    const lat = location.lat;
-    const lng = location.lng;
-    const result1 = await getOmuIndexCountable(stationName,lat,lng); // Places API
+    const result1 = await getOmuIndexCountable(lat,lng); // Places API
 
     if( result1 ) {
       const localCafeIndex = roundCount(result1.localCafe.count);
@@ -53,7 +67,7 @@ export async function omuIndexMain(stationName) {
     }
     // console.log(JSON.stringify(result,null, 2));
 
-    await registerOmuriceIndex(stationName,result); // どんどん上書きしていく
+    await registerOmuriceIndex(station_id,result); // どんどん上書きしていく
 
     return result;
   } catch (error) {

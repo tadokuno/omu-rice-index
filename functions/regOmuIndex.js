@@ -4,53 +4,11 @@ const supabaseUrl = process.env.SUPABASE_API_URL;
 const supabaseKey = process.env.SUPABASE_API_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export async function registerOmuriceIndex(station_name,omuIndexData) {
+export async function registerOmuriceIndex(station_id,omuIndexData) {
   try {
-    // 1. station_masterテーブルからstation_nameに一致する駅情報を取得
-    const { data: stationData, error: stationError } = await supabase
-      .from('station_master')
-      .select('station_id')
-      .eq('station_name', station_name)
-      .single();
-
-    if (stationError && stationError.code !== 'PGRST116') { // 駅が存在しないエラー以外のエラーをチェック
-      console.error('Error fetching station:', stationError);
-      return;
-    }
-
-    let station_id;
-
-    if (!stationData) {
-      // 2. station_masterに駅が存在しない場合、omuIndexDataを使って、station_masterに新規登録
-
-      // 新しい駅情報をstation_masterに登録
-      const { data: newStation, error: insertError } = await supabase
-        .from('station_master')
-        .insert([
-          {
-            station_name: omuIndexData.stationName,
-            lat: omuIndexData.lat,
-            lng: omuIndexData.lng,
-            created_at: new Date(),
-          },
-        ])
-        .select();
-
-      if (insertError) {
-        console.error('Error inserting station:', insertError);
-        return;
-      }
-
-      station_id = newStation[0].station_id;
-    } else {
-      // 3. 駅が既に存在する場合、そのIDを取得
-      station_id = stationData.station_id;
-    }
-
     // 4. omurice_indexテーブルにオムライス指数データを追加
-
     // OpenAIの戻り値を登録
-    try { // この中が一つのトランザクションとなる
+    // この中が一つのトランザクションとなる
       const openaiId = await insertOpenAIInfo(
         station_id,
         omuIndexData.openai.shoutengai,
@@ -71,9 +29,6 @@ export async function registerOmuriceIndex(station_name,omuIndexData) {
         await insertOmuriceIndex(station_id, omuIndexData.lat, omuIndexData.lng, openaiId, googlemapId, omuIndexData.index);
         console.log('All data inserted successfully!');
       }
-    } catch (error) {
-      console.error('Error inserting all data:', error);
-    }
   } catch (error) {
     console.error('Error in registerOmuriceIndex:', error);
   }
@@ -155,23 +110,27 @@ async function insertOmuriceIndex(stationId, lat, lng, openaiId, googlemapId, om
     console.log('Omurice Index inserted:', data);
   }
 }
-
-export async function fetchOmuriceIndexData(stationName) {
+export async function fetchStationMaster(stationName) {
   try {
     // station_masterテーブルからstation_id、lat、lngを取得
     const { data: stationData, error: stationError } = await supabase
       .from('station_master')
       .select('station_id, station_name, lat, lng')
-      .eq('station_name', stationName)
-      .single();
+      .eq('station_name', stationName);
 
     if (stationError) {
-      console.log(`Cannot found station: ${stationName}\n`);
+      console.log(`Cannot found station ID: ${station_id}\n`);
       throw stationError;
     }
+    return stationData;
+  } catch {
+    return null;
+  }
+}
 
-    const { station_id, lat, lng } = stationData;
-
+export async function fetchOmuriceIndexData(stationName,station_id,lat,lng) {
+  console.log(`fetchOID(${stationName},${station_id},${lat},${lng})`);
+  try {
     // omurice_indexテーブルから、created_atが最大のデータを取得
     const { data: omuriceIndexData, error: omuriceIndexError } = await supabase
       .from('omurice_index')
@@ -258,7 +217,7 @@ export async function fetchOmuriceIndexData(stationName) {
     return result;
 
   } catch (error) {
-    console.error('Error fetching omurice index data:', error);
+    // console.error('Error fetching omurice index data:', error);
     return null;
   }
 }

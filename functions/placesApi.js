@@ -148,7 +148,7 @@ async function getAllPlaceCount2(lat, lng, tpy) {
 //
 //
 //
-export async function getOmuIndexCountable (stationName,lat,lng) {
+export async function getOmuIndexCountable (lat,lng) {
     try {
         // 緯度経度から指定した範囲内の店舗数を取得
         const localCafe = await getAllPlaceCount(lat, lng, "cafe","local",300,exclusionCafe);
