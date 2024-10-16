@@ -214,7 +214,7 @@
     async function fetchOmuIndexData(station_name,station_id,lat,lng) {
       const result = await fetch(`/.netlify/functions/fetchOmuIndexData?station_name=${station_name}&station_id=${station_id}&lat=${lat}&lng=${lng}`);
       console.log(`RESULT::: ${result}`);
-      return await response.json();
+      return await result.json();
     }
     // ページ読み込み時にマップを初期化
     window.onload = initMap;
