@@ -119,6 +119,24 @@ export async function fetchStationMaster(stationName) {
       .eq('station_name', stationName);
 
     if (stationError) {
+      console.log(`Cannot found station : ${station_name}\n`);
+      throw stationError;
+    }
+    return stationData;
+  } catch {
+    return null;
+  }
+}
+export async function fetchStationMasterByID(station_id) {
+  try {
+    // station_masterテーブルからstation_id、lat、lngを取得
+    const { data: stationData, error: stationError } = await supabase
+      .from('station_master')
+      .select('station_id, station_name, lat, lng')
+      .eq('station_id', station_id)
+      .single();
+
+    if (stationError) {
       console.log(`Cannot found station ID: ${station_id}\n`);
       throw stationError;
     }
@@ -129,6 +147,9 @@ export async function fetchStationMaster(stationName) {
 }
 
 export async function fetchOmuriceIndexData(stationName,station_id,lat,lng) {
+  if(!station_id) {
+    return null;
+  }
   console.log(`fetchOID(${stationName},${station_id},${lat},${lng})`);
   try {
     // omurice_indexテーブルから、created_atが最大のデータを取得

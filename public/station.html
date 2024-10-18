@@ -29,6 +29,55 @@
             background-color: rgb(221, 221, 221);
         }
     </style>
+    <script>
+        // Function to get URL parameters
+        function getQueryParam(param) {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get(param);
+        }
+        
+        // Function to fetch and display Omurice Index
+        async function displayStationInfo() {
+          const station_id = getQueryParam('station_id');
+          const station_name = getQueryParam('station_name');
+          if (station_id) {
+            // Display station name
+            
+            document.querySelector('.content').innerHTML = `<h2>${station_name}</h2><p>読み込み中...</p>`;
+
+            // Fetch the Omurice Index using getOmuIndexMain() function (assumed to be defined)
+            const response = await fetch(`/.netlify/functions/getOmuIndexByID?station_id=${station_id}`);
+            const omuIndex = await response.json();
+            document.querySelector('.content').innerHTML = `${omuIndex.stationName}`;
+
+            // Update content with fetched data
+            let message = `
+            <h2>${omuIndex.stationName}</h2>
+              <p>オムライス指数: ${omuIndex.index}</p><br>
+              <p>喫茶店の数: ${omuIndex.googlemap.localCafe.count}</p>
+              <p>町中華の数: ${omuIndex.googlemap.chineseRestaurant.count}</p>
+              <p>洋食屋の数: ${omuIndex.googlemap.westernRestaurant.count}</p>
+              <p>スナックの数: ${omuIndex.googlemap.snack.count}</p>
+              <br>
+            `;
+            const openai = omuIndex.openai;
+            for (let key in openai ) {
+                const data = openai[key];
+                message += `<p>${data.index}: ${data.text}</p>`;
+            }
+            document.querySelector('.content').innerHTML = message;
+
+            const stationInput = document.getElementById('station');
+            stationInput.value = station_name;
+
+          } else {
+            document.querySelector('.content').innerHTML = '<p>駅が選択されていません。</p>';
+          }
+        }
+        
+        // Call displayStationInfo on page load
+        window.onload = displayStationInfo;
+    </script>
 </head>
 <body>
     <div class="window">
@@ -141,4 +190,5 @@
             <footer>(c) OmuQuest</footer>
         </div>
     </div>
-</body>        
+</body>
+</html>        

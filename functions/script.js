@@ -1,7 +1,7 @@
 import { getCoordinates,getOmuIndexCountable } from './placesApi.js';
 import { calculateOmuIndex } from './openaiApi.js';
 import { registerOmuriceIndex } from './regOmuIndex.js';
-import { fetchOmuriceIndexData,fetchStationMaster } from './regOmuIndex.js'
+import { fetchOmuriceIndexData,fetchStationMaster,fetchStationMasterByID } from './regOmuIndex.js'
 
 const config = {
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
@@ -12,6 +12,21 @@ function roundCount(count) {
   return Math.floor(count>10?10:count);
 }
 
+export async function getOmuIndexByID(station_id) {
+  if(!station_id) {
+    return null;
+  }
+  const station = await fetchStationMasterByID(station_id);
+  if( station == null ) { // マスターに登録されていない
+    return null;
+  }
+  console.log(station_id);
+  console.log(station);
+
+  const result=getOmuIndexMain(station.station_name,station.station_id,station.lat,station.lng);
+  return result;
+}
+
 export async function getOmuIndexByCord(lat,lng) {
   // 座標が一致する駅を検索する ==> station_id
   // 無ければ、最も近い駅を検索する。==> station_id
@@ -19,6 +34,9 @@ export async function getOmuIndexByCord(lat,lng) {
 }
 
 export async function omuIndexMain(stationName) {
+  if(!stationName) {
+    return null;
+  }
   // stationNameからstation_master上のデータを取得する。
   const data = fetchStationMaster(stationName);
   if( data == null ) { // マスターに登録されていない

@@ -145,28 +145,6 @@
         initializeMap(35.681236, 139.767125); // 東京駅
       }
     }
-    /*
-    function initMapNew() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
-          map = L.map('map').setView([lat, lng], 12);
-        }, function () {
-          map = L.map('map').setView([35.681236, 139.767125], 12); // 東京駅
-        });
-      } else {
-        map = L.map('map').setView([35.681236, 139.767125], 12); // Geolocationがない場合
-      }
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(map);
-
-      markerGroup = L.layerGroup().addTo(map);
-      map.on('moveend', fetchStationData_org); // 地図移動後にデータを取得
-    }
-    */
     // 駅のデータを基にマップとリストを更新
     function updateMapAndList(stations) {
       const stationList = document.getElementById('station-list');
@@ -180,6 +158,12 @@
         // リストにオムライス指数を追加
         const row = document.createElement('tr');
         row.innerHTML = `<td>${station.station_name}</td><td>${station.index}</td>`;
+
+        // Add click event to redirect to station.html with station_name as query parameter
+        row.addEventListener('click', () => {
+          window.location.href = `station.html?station_id=${station.station_id}`;
+        });
+
         stationList.appendChild(row);
       });
     }
