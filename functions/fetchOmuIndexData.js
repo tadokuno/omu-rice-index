@@ -9,8 +9,16 @@ export async function handler(event, context) {
   const lat = params.lat;
   const lng = params.lng;
 
-  const result = await fetchOmuriceIndexData(station_name,station_id,lat,lng);  
-
+  let result = await fetchOmuriceIndexData(station_name,station_id,lat,lng); 
+  if( !result ) {
+    result = {
+      stationName: station_name,
+      station_id,
+      lat,
+      lng, 
+      index: 0
+    }
+  }
   return {
     statusCode: 200,
     body: JSON.stringify(result),

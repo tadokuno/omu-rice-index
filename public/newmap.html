@@ -157,7 +157,7 @@
 
         // リストにオムライス指数を追加
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${station.station_name}</td><td>${station.index}</td>`;
+        row.innerHTML = `<td>${station.station_name}</td><td>${station.index?station.index:""}</td>`;
 
         // Add click event to redirect to station.html with station_name as query parameter
         row.addEventListener('click', () => {
@@ -182,12 +182,13 @@
         .lte('lng', ne.lng);
 
       // オムライス指数を取得
-      data.forEach( async station => {
-        const result = await fetchOmuIndexData(station.station_name,station.station_id,station.lat,station.lng);
-        if( result != null ) {
-          station.index = result.index;
+      for (const station of data) {
+        const result = await fetchOmuIndexData(station.station_name, station.station_id, station.lat, station.lng);
+        if (result != null) {
+          station.index = result.index?result.index:0;
         }
-      })
+      }
+      data.sort((a,b) => b.index - a.index);
 
       if (error) {
         console.error('Error fetching station data:', error);
