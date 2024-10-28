@@ -45,7 +45,7 @@
 
     .content {
       padding: 10px;
-      height: 260px; /* タイトルバーの分を引いた高さ */
+      height: 330px; 
       overflow-y: scroll; /* 常にスクロールバーを表示 */
       font-size: 12px;
       background-color: white;
@@ -111,7 +111,7 @@
 
     // Leafletマップの初期化
     async function initializeMap(lat, lng) {
-      map = L.map('map').setView([lat, lng], 12);
+      map = L.map('map').setView([lat, lng], 13);  /* zoom 率 13 */
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'

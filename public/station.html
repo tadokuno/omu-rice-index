@@ -9,14 +9,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/simplebar@5.3.6/dist/simplebar.min.js"></script>
     <style>
         .content {
-            padding: 10px;
-            height: 40vh; /* タイトルバーの分を引いた高さ */
-            overflow-y: scroll; /* 常にスクロールバーを表示 */
-            font-size: 14px;
-            background-color: rgb(221, 221, 221);
-            box-sizing: border-box;
-            -webkit-overflow-scrolling: touch; /* iOSでのスムーズスクロール */
-        }
+            height: 40vh;  /* タイトルバーの分を引いた高さ */
+        } 
         .text label, input {
             display: inline-block;
             margin-right: 10px; /* ラベルと入力欄の間に余白を追加 */
@@ -26,58 +20,16 @@
             width: 200px; /* 入力欄の幅を調整 */
         }
         .input-window form {
+            flex: 1;
+            padding: 10px;
+            height: 40vh;
+            overflow-y: scroll; /* 常にスクロールバーを表示 */
+            font-size: 14px;
             background-color: rgb(221, 221, 221);
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch; /* iOSでのスムーズスクロール */
         }
     </style>
-    <script>
-        // Function to get URL parameters
-        function getQueryParam(param) {
-          const urlParams = new URLSearchParams(window.location.search);
-          return urlParams.get(param);
-        }
-        
-        // Function to fetch and display Omurice Index
-        async function displayStationInfo() {
-          const station_id = getQueryParam('station_id');
-          const station_name = getQueryParam('station_name');
-          if (station_id) {
-            // Display station name
-            
-            document.querySelector('.content').innerHTML = `<h2>${station_name}</h2><p>読み込み中...</p>`;
-
-            // Fetch the Omurice Index using getOmuIndexMain() function (assumed to be defined)
-            const response = await fetch(`/.netlify/functions/getOmuIndexByID?station_id=${station_id}`);
-            const omuIndex = await response.json();
-            document.querySelector('.content').innerHTML = `${omuIndex.stationName}`;
-
-            // Update content with fetched data
-            let message = `
-            <h2>${omuIndex.stationName}</h2>
-              <p>オムライス指数: ${omuIndex.index}</p><br>
-              <p>喫茶店の数: ${omuIndex.googlemap.localCafe.count}</p>
-              <p>町中華の数: ${omuIndex.googlemap.chineseRestaurant.count}</p>
-              <p>洋食屋の数: ${omuIndex.googlemap.westernRestaurant.count}</p>
-              <p>スナックの数: ${omuIndex.googlemap.snack.count}</p>
-              <br>
-            `;
-            const openai = omuIndex.openai;
-            for (let key in openai ) {
-                const data = openai[key];
-                message += `<p>${data.index}: ${data.text}</p>`;
-            }
-            document.querySelector('.content').innerHTML = message;
-
-            const stationInput = document.getElementById('station');
-            stationInput.value = station_name;
-
-          } else {
-            document.querySelector('.content').innerHTML = '<p>駅が選択されていません。</p>';
-          }
-        }
-        
-        // Call displayStationInfo on page load
-        window.onload = displayStationInfo;
-    </script>
 </head>
 <body>
     <div class="window">
@@ -101,7 +53,7 @@
             3: 古いショーケースや食品サンプルを飾っている店は少なく、全体的にモダンな印象が強い。<br>
         </div>
         <!-- 情報登録画面 -->
-            <div class="input-window">
+            <div class="input-window" data-simplebar data-simplebar-auto-hide="false">
                 <div class="title-bar">
                     <span class="title">情報登録</span>
                     <div class="buttons">
@@ -109,25 +61,25 @@
                         <button class="close">x</button>
                     </div>
                 </div>
-                <div class="content" data-simplebar data-simplebar-auto-hide="false">
-                    <form action="/stationinfo" method="post" enctype="multipart/form-data">
-                    <!-- 駅のテキスト入力 -->
+                <div class="contentb" data-simplebar data-simplebar-auto-hide="false">
+                    <form id="uploadForm" method="post" enctype="multipart/form-data">
+                    <!-- 駅名のテキスト入力 -->
                     <div class="text">
                         <label for="station">駅名</label>
-                        <input type="text" name="station" id="station" value="中目黒駅" required>
+                        <input type="text" name="station" id="station" value="" required>
                     </div>
 
                     <!-- 商店街の様子 -->
                     <fieldset class="choices">
                         <legend>商店街の様子</legend>
                         <label>
-                            <input type="radio" name="shop" value="10"> アーケードのある昔ながらの商店街があり、活況である <br>
+                            <input type="radio" name="shoutengai" value="10"> アーケードのある昔ながらの商店街があり、活況である <br>
                         </label>
                         <label>
-                            <input type="radio" name="shop" value="5"> 商店街はあるが、シャッターが閉まっている店がちらほら <br>
+                            <input type="radio" name="shoutengai" value="5"> 商店街はあるが、シャッターが閉まっている店がちらほら <br>
                         </label>
                         <label>
-                            <input type="radio" name="shop" value="0"> 商店街が見当たらない <br>
+                            <input type="radio" name="shoutengai" value="0"> 商店街が見当たらない <br>
                         </label>
                     </fieldset>
 
@@ -135,13 +87,13 @@
                     <fieldset class="choices">
                         <legend>周辺道路の様子</legend>
                         <label>
-                            <input type="radio" name="road" value="10"> 細い路地があちこちにあり、町の奥行きを感じる <br>
+                            <input type="radio" name="michi" value="10"> 細い路地があちこちにあり、町の奥行きを感じる <br>
                         </label>
                         <label>
-                            <input type="radio" name="road" value="5"> 道は少ないが整備されていない <br>
+                            <input type="radio" name="michi" value="5"> 道は少ないが整備されていない <br>
                         </label>
                         <label>
-                            <input type="radio" name="road" value="0"> きれいに区画整理されている。 <br>
+                            <input type="radio" name="michi" value="0"> きれいに区画整理されている。 <br>
                         </label>
                     </fieldset>
 
@@ -149,29 +101,61 @@
                     <fieldset class="choices">
                         <legend>古い店が残っているか</legend>
                         <label>
-                            <input type="radio" name="old_store" value="10"> 昔からやっていると思われる店が多く見られる <br>
+                            <input type="radio" name="furuiMise" value="10"> 昔からやっていると思われる店が多く見られる <br>
                         </label>
                         <label>
-                            <input type="radio" name="old_store" value="5"> 再開発が進んでおり、ビルに入っている店が多い <br>
+                            <input type="radio" name="furuiMise" value="5"> 再開発が進んでおり、ビルに入っている店が多い <br>
                         </label>
                         <label>
-                            <input type="radio" name="old_store" value="0"> チェーン店のような店が大半である <br>
+                            <input type="radio" name="furuiMise" value="0"> チェーン店のような店が大半である <br>
                         </label>
                     </fieldset>
                     <!-- ショーケースや食品サンプルが見られるか -->
                     <fieldset class="choices">
                         <legend>ショーケースや食品サンプル</legend>
                         <label>
-                            <input type="radio" name="showcase" value="10"> ショーケースの中に食品サンプルを置いている店がある <br>
+                            <input type="radio" name="shokuSample" value="10"> ショーケースの中に食品サンプルを置いている店がある <br>
                         </label>
                         <label>
-                            <input type="radio" name="showcase" value="5"> ショーケースは無いが、写真やメニューを出している店がある <br>
+                            <input type="radio" name="shokuSample" value="5"> ショーケースは無いが、写真やメニューを出している店がある <br>
                         </label>
                         <label>
-                            <input type="radio" name="showcase" value="2"> ランチ時の案内程度 <br>
+                            <input type="radio" name="shokuSample" value="2"> ランチ時の案内程度 <br>
                         </label>
                         <label>
-                            <input type="radio" name="showcase" value="0"> 表からはあまりよく分からない <br>
+                            <input type="radio" name="shokuSample" value="0"> 表からはあまりよく分からない <br>
+                        </label>
+                    </fieldset>
+                    <!-- 古い飲食ビルがあるか　-->
+                    <fieldset class="choices">
+                        <legend>古い飲食ビルがあるかどうか</legend>
+                        <label>
+                            <input type="radio" name="building" value="10"> 昔からある古い飲食ビルが何軒もあり、昼間でも営業している <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="building" value="5"> 古い飲食ビルはあるが、昼間は営業していない店が大半 <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="building" value="2"> 飲食ビルはあるが、大半が新しいビルで古い店は見当たらない <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="building" value="0"> 飲食ビルは全く見当たらない <br>
+                        </label>
+                    </fieldset>
+                    <!-- チェーン店が少ないかどうか　-->
+                    <fieldset class="choices">
+                        <legend>チェーン店が少ないかどうか</legend>
+                        <label>
+                            <input type="radio" name="chain" value="10"> チェーン店ではないローカルの店が大半 <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="chain" value="7"> チェーン店がちらほらあるが、ローカルの店が多い <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="chain" value="5"> チェーン店が多くあるが、ローカルの店も多い <br>
+                        </label>
+                        <label>
+                            <input type="radio" name="chain" value="2"> 大半がチェーン店のように見える <br>
                         </label>
                     </fieldset>
 
@@ -190,5 +174,166 @@
             <footer>(c) OmuQuest</footer>
         </div>
     </div>
+    <script>
+        // Function to get URL parameters
+        function getQueryParam(param) {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get(param);
+        }
+        
+        // Function to fetch and display Omurice Index
+        async function displayStationInfo() {
+          const station_id = getQueryParam('station_id');
+          const station_name = getQueryParam('station_name');
+          if (station_id) {
+            // Display station name
+            document.querySelector('.content').innerHTML = `<h2>${station_name}</h2><p>読み込み中...</p>`;
+
+            // Fetch the Omurice Index using getOmuIndexMain() function (assumed to be defined)
+            const response = await fetch(`/.netlify/functions/getOmuIndexByID?station_id=${station_id}`);
+            const omuIndex = await response.json();
+            document.querySelector('.content').innerHTML = `${omuIndex.stationName}`;
+
+            // Update content with fetched data
+            let message = `
+            <h2>${omuIndex.stationName}</h2>
+              <p>オムライス指数: ${omuIndex.index}</p><br>
+              <p>喫茶店の数: ${omuIndex.googlemap.localCafe.count}</p>
+              <p>町中華の数: ${omuIndex.googlemap.chineseRestaurant.count}</p>
+              <p>洋食屋の数: ${omuIndex.googlemap.westernRestaurant.count}</p>
+              <p>スナックの数: ${omuIndex.googlemap.snack.count}</p>
+              <br>
+            `;
+            const openai = omuIndex.openai;
+            for (let key in openai ) {
+                const data = openai[key];
+                message += `<p>${data.index}: ${data.text}</p>`;
+            }
+            message += `<h3>お店リスト</h3><ul><li>`;
+            const googlemap = omuIndex.googlemap;
+            for (let key in googlemap ) {
+                const data = googlemap[key];
+                const msg = data.message;
+                const listmsg = msg.replace(/\n/g,"</li><li>");
+                message += `${listmsg}`;
+            }
+            message += `</li></ul>`;
+
+            document.querySelector('.content').innerHTML = message;
+
+            // 登録エリアに駅名を設定する
+            const stationInput = document.getElementById('station');
+            stationInput.value = station_name;
+
+          } else {
+            document.querySelector('.content').innerHTML = '<p>駅が選択されていません。</p>';
+          }
+        }
+        
+        // Call displayStationInfo on page load
+        window.onload = displayStationInfo;
+    </script>
+    <script>
+// ユーザーの現在位置を取得（Geolocation APIを使用） -- main.js にも定義されている
+        const getUserLocation = () => {
+            return new Promise((resolve, reject) => {
+                if (navigator.geolocation) {
+                // GPS情報を取得する
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => resolve({
+                            lat: position.coords.latitude,   // 緯度
+                            lng: position.coords.longitude   // 経度
+                        }),
+                        (error) => {
+                            switch(error.code) {
+                                case error.PERMISSION_DENIED:
+                                    console.error("ユーザーが位置情報取得を拒否しました。");
+                                    break;
+                                case error.POSITION_UNAVAILABLE:
+                                    console.error("位置情報を取得できませんでした。");
+                                    break;
+                                case error.TIMEOUT:
+                                    console.error("位置情報取得のリクエストがタイムアウトしました。");
+                                    break;
+                                default:
+                                    console.error("未知のエラーが発生しました。");
+                                    break;
+                            }
+                        },
+                        {
+                            enableHighAccuracy: true,        // 高精度の位置情報を取得
+                            timeout: 10000,                  // 10秒以内に取得できなければ失敗
+                            maximumAge: 0                    // キャッシュされた位置情報は使わない
+                        }
+                    );
+                } else {
+                    reject(new Error("Geolocationはサポートされていません"));
+                }
+            });
+        };
+
+        document.getElementById('uploadForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const fileInput = document.querySelector('#file');
+            const file = fileInput.files[0];
+            if( file.size > 10 * 1024 * 1024 ) {
+                alert('ファイルサイズが大きすぎます。10MB以下のファイルを選択してください');
+                return;
+            }
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = async () => {
+                    const imageData = reader.result.split(',')[1];  // Base64データに変換
+
+                    try {
+                        const location = await getUserLocation();  // スマホのGPS情報を取得
+                        console.log(location);
+                    }
+                    catch {
+                        console.error('位置情報の取得に失敗しました: ', error);
+                        alert('位置情報の取得に失敗しました。GPSを確認してください。');
+                    }
+                    try {
+                        // フォームデータと画像をサーバーに送信
+                        const response = await fetch('/.netlify/functions/upload', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                table_name: "openai_info",
+                                station: formData.get('station'),
+                                shoutengai: formData.get('shoutengai'),
+                                michi: formData.get('michi'),
+                                furui_mise: formData.get('furuiMise'),
+                                shoku_sample: formData.get('shokuSample'),
+                                building: formData.get('building'),
+                                chain: formData.get('chain'),
+                                userLat: location.lat,  // GPSから取得した緯度
+                                userLng: location.lng,  // GPSから取得した経度
+                                fileName: file.name,
+                                image: imageData       // Base64に変換された画像データ
+                            }),
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        });
+
+                        const result = await response.json();
+                        console.log(result.message);
+
+                        if (response.ok) {
+                            document.getElementById('completeMessage').style.display = 'block';
+                        }
+                    } catch (error) {
+                        console.error('フォームデータの登録に失敗しました: ', error);
+                        alert('フォームデータの登録に失敗しました。');
+                    }
+                };
+                reader.readAsDataURL(file); // 画像をBase64に変換
+            }
+        });
+
+    </script>
 </body>
 </html>        

@@ -102,16 +102,37 @@ export const handler = async (event) => {
         const imageUrl = result.url;
 
         // Supabaseにデータを挿入
+        // table_nameで挿入するテーブルが指定される.指定が無い場合はomurice_images
+        const insertData1 = {
+            image_path: imageUrl,
+            station_id: stationId,
+        }
+        let insertData2 = {};
+        let table_name = 'omurice_images';
+        if(body.table_name == "openai_info") {
+            table_name = body.table_name;
+            insertData2 = {
+                shoutengai_index: body.shoutengai,
+                michi_index: body.michi,
+                furui_mise_index: body.furui_mise,
+                shoku_sample_index: body.shoku_sample,
+                building_index: body.building,
+                chain_index: body.chain
+            }
+        } else {
+            insertData2 = {
+                station_name: body.station,
+                egg: body.egg,
+                rice: body.rice,
+                sauce: body.sauce
+            }
+        }
         const { data, error } = await supabase
-            .from('omurice_images') // Supabaseのテーブル名を指定
+            .from(table_name) // Supabaseのテーブル名を指定
             .insert([
                 {
-                    image_path: imageUrl,
-                    station_name: body.station,
-                    station_id: stationId,
-                    egg: body.egg,
-                    rice: body.rice,
-                    sauce: body.sauce
+                    ...insertData1,
+                    ...insertData2
                 }
             ]);
 
