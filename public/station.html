@@ -37,8 +37,13 @@
             <span class="title">駅周辺情報</span>
             <div class="buttons">
                 <button class="minimize">-</button>
-                <button class="close">x</button>
+                <button id="close" class="close">x</button>
             </div>
+            <script>
+                document.getElementById('close').addEventListener('click', function() {
+                    window.location.href = `newmap.html`;
+                });
+            </script>
         </div>
         <div class="content" data-simplebar data-simplebar-auto-hide="false">
             中目黒駅 <br>
@@ -233,45 +238,8 @@
         // Call displayStationInfo on page load
         window.onload = displayStationInfo;
     </script>
+    <script type="text/javascript" src="main.js"></script>
     <script>
-// ユーザーの現在位置を取得（Geolocation APIを使用） -- main.js にも定義されている
-        const getUserLocation = () => {
-            return new Promise((resolve, reject) => {
-                if (navigator.geolocation) {
-                // GPS情報を取得する
-                    navigator.geolocation.getCurrentPosition(
-                        (position) => resolve({
-                            lat: position.coords.latitude,   // 緯度
-                            lng: position.coords.longitude   // 経度
-                        }),
-                        (error) => {
-                            switch(error.code) {
-                                case error.PERMISSION_DENIED:
-                                    console.error("ユーザーが位置情報取得を拒否しました。");
-                                    break;
-                                case error.POSITION_UNAVAILABLE:
-                                    console.error("位置情報を取得できませんでした。");
-                                    break;
-                                case error.TIMEOUT:
-                                    console.error("位置情報取得のリクエストがタイムアウトしました。");
-                                    break;
-                                default:
-                                    console.error("未知のエラーが発生しました。");
-                                    break;
-                            }
-                        },
-                        {
-                            enableHighAccuracy: true,        // 高精度の位置情報を取得
-                            timeout: 10000,                  // 10秒以内に取得できなければ失敗
-                            maximumAge: 0                    // キャッシュされた位置情報は使わない
-                        }
-                    );
-                } else {
-                    reject(new Error("Geolocationはサポートされていません"));
-                }
-            });
-        };
-
         document.getElementById('uploadForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -333,7 +301,6 @@
                 reader.readAsDataURL(file); // 画像をBase64に変換
             }
         });
-
     </script>
 </body>
 </html>        

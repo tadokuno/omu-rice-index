@@ -38,13 +38,13 @@ export async function omuIndexMain(stationName) {
     return null;
   }
   // stationNameからstation_master上のデータを取得する。
-  const data = fetchStationMaster(stationName);
+  const data = await fetchStationMaster(stationName);
   if( data == null ) { // マスターに登録されていない
     return null;
   }
-  data.foreach(station => {
-    station.result=getOmuIndexMain(station.station_name,station.station_id,station.lat,station.lng);
-  });
+  for (let station of data) {
+    station.result = await getOmuIndexMain(station.station_name, station.station_id, station.lat, station.lng);
+  }
   return data[0].result;
 }
 

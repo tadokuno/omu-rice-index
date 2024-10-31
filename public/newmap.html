@@ -71,6 +71,8 @@
   </style>
   <!-- Leaflet.jsのCSSを読み込み -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
 </head>
 <body>
   <div class="window">
@@ -78,7 +80,12 @@
       <span class="title">OmuQue Manager</span>
       <div class="buttons">
         <button class="minimize">-</button>
-        <button class="close">x</button>
+        <button id="close" class="close">x</button>
+        <script>
+          document.getElementById('close').addEventListener('click', function() {
+              window.location.href = `topmenu.html`;
+          });
+        </script>
       </div>
     </div>
     <div id="map"></div>
@@ -101,20 +108,39 @@
 
   <!-- Leaflet.jsのJavaScriptを読み込み -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <script src="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
+
   <!-- Supabase用のスクリプト -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
+  <script type="text/javascript" src="main.js"></script>
   <script>
     let map;
     let markerGroup;
     let supabaseClient;
 
     // Leafletマップの初期化
-    async function initializeMap(lat, lng) {
-      map = L.map('map').setView([lat, lng], 13);  /* zoom 率 13 */
+    async function initializeMap(lat, lng, zoom) {
+      map = L.map('map').setView([lat, lng], zoom);  /* zoom 率 13 */
 
+      // OpenStreetMapのタイルレイヤーを追加
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // 検索ウィジェットの追加 (Leaflet Control Geocoder)
+      const geocoder = L.Control.geocoder({
+        defaultMarkGeocode: true
+      }).addTo(map);
+
+      // 現在位置に移動するウィジェットの追加 (Leaflet Locate Control)
+      L.control.locate({
+        position: 'topright',
+        keepCurrentZoomLevel: true,
+        strings: {
+            title: "現在位置を表示"
+        }
       }).addTo(map);
 
       // 地図が移動したりリサイズされたときに駅リストを更新
@@ -130,19 +156,28 @@
       supabaseClient = supabase.createClient(env.supabaseUrl, env.supabaseKey);
 
       // 東京駅をデフォルトとして、現在地を中心に設定
-      let lat = 35.681236;
-      let lng = 139.767125;
-      if (navigator.geolocation) {
+      const tokyo_lat = 35.681236;
+      const tokyo_lng = 139.767125;
+      let lat = getCookie('latitude');
+      let lng = getCookie('longitude');
+      let zoom = getCookie('zoom');
+      //let lat=tokyo_lat;
+      //let lng=tokyo_lng;
+
+      if( lat && lng && zoom ) {
+        console.log(`保存された位置情報を利用: 緯度 ${lat}, 経度 ${lng}, ズームレベル ${zoom}`);
+        initializeMap(lat,lng,zoom);
+      } else if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
           console.log(position.coords);
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
-          initializeMap(lat,lng);
+          initializeMap(lat,lng,13);
         }, function () {
-          initializeMap(35.681236, 139.767125); // 東京駅
+          initializeMap(tokyo_lat, tokyo_lng, 13); // 東京駅
         });
       } else {
-        initializeMap(35.681236, 139.767125); // 東京駅
+        initializeMap(tokyo_lat, tokyo_lng, 13); // 東京駅
       }
     }
     // 駅のデータを基にマップとリストを更新
@@ -171,6 +206,9 @@
       const bounds = map.getBounds();
       const ne = bounds.getNorthEast();
       const sw = bounds.getSouthWest();
+      const center = map.getCenter();
+      const zoom = map.getZoom();
+      saveLocation(center.lat,center.lng,zoom);
 
       // Supabaseからstation_masterテーブルの駅データを取得
       const { data, error } = await supabaseClient
@@ -180,12 +218,21 @@
         .lte('lat', ne.lat)
         .gte('lng', sw.lng)
         .lte('lng', ne.lng);
-
+      const flag = 0;
       // オムライス指数を取得
       for (const station of data) {
         const result = await fetchOmuIndexData(station.station_name, station.station_id, station.lat, station.lng);
         if (result != null) {
-          station.index = result.index?result.index:0;
+          if( result.index ) {
+            station.index = result.index;
+          } else if( flag ) {
+            // Fetch the Omurice Index using getOmuIndexMain() function (assumed to be defined)
+            const response = await fetch(`/.netlify/functions/getOmuIndexByID?station_id=${station.station_id}`);
+            const omuIndex = await response.json();
+            station.index = omuIndex.index;
+          } else {
+            station.index = 0;
+          }
         }
       }
       data.sort((a,b) => b.index - a.index);

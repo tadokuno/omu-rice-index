@@ -36,58 +36,88 @@ const getUserLocation = () => {
     });
 };
 
-document.getElementById('uploadForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-    const fileInput = document.querySelector('#file');
-    const file = fileInput.files[0];
-
-    if (file) {
-        const reader = new FileReader();
-        reader.onloadend = async () => {
-            const imageData = reader.result.split(',')[1];  // Base64データに変換
-
-            try {
-                const location = await getUserLocation();  // スマホのGPS情報を取得
-                console.log(location);
-            }
-            catch {
-                console.error('位置情報の取得に失敗しました: ', error);
-                alert('位置情報の取得に失敗しました。GPSを確認してください。');
-            }
-            try {
-                // フォームデータと画像をサーバーに送信
-                const response = await fetch('/.netlify/functions/upload', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        station: formData.get('station'),
-                        egg: formData.get('egg'),
-                        rice: formData.get('rice'),
-                        sauce: formData.get('sauce'),
-                        userLat: location.lat,  // GPSから取得した緯度
-                        userLng: location.lng,  // GPSから取得した経度
-                        fileName: file.name,
-                        image: imageData       // Base64に変換された画像データ
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-                const result = await response.json();
-                console.log(result.message);
-
-                if (response.ok) {
-                    document.getElementById('completeMessage').style.display = 'block';
-                }
-            } catch (error) {
-                console.error('フォームデータの登録に失敗しました: ', error);
-                alert('フォームデータの登録に失敗しました。');
-            }
-        };
-
-        reader.readAsDataURL(file); // 画像をBase64に変換
+// クッキーを設定する関数
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
     }
-});
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
 
+// クッキーを取得する関数
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+// 位置情報を保存する関数
+function saveLocation(lat,lng,zoom) {
+    setCookie('latitude', lat, 7);  // 緯度を7日間保存
+    setCookie('longitude', lng, 7); // 経度を7日間保存
+    setCookie('zoom', zoom, 7);
+    console.log(`位置情報を保存しました: 緯度 ${lat}, 経度 ${lng}`);
+}
+
+function saveLocationToCookie(position) {
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+    setCookie('latitude', lat, 7);  // 緯度を7日間保存
+    setCookie('longitude', lng, 7); // 経度を7日間保存
+    console.log(`位置情報を保存しました: 緯度 ${lat}, 経度 ${lng}`);
+}
+
+// 位置情報の取得
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(saveLocationToCookie, showError);
+    } else {
+        console.error("このブラウザは位置情報取得をサポートしていません。");
+    }
+}
+
+// エラーが発生した場合の処理
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            console.error("ユーザーが位置情報の取得を拒否しました。");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            console.error("位置情報が利用できません。");
+            break;
+        case error.TIMEOUT:
+            console.error("位置情報の取得がタイムアウトしました。");
+            break;
+        case error.UNKNOWN_ERROR:
+            console.error("未知のエラーが発生しました。");
+            break;
+    }
+}
+
+// 保存された位置情報を利用する関数
+function useSavedLocation() {
+    const lat = getCookie('latitude');
+    const lng = getCookie('longitude');
+    if (lat && lng) {
+        console.log(`保存された位置情報を利用: 緯度 ${lat}, 経度 ${lng}`);
+        // ここで地図や他の機能に緯度経度を利用できます
+    } else {
+        console.log("保存された位置情報はありません。");
+    }
+}
+
+/*
+// ページの読み込み時に位置情報を取得して保存
+document.addEventListener("DOMContentLoaded", function() {
+    getLocation();
+    useSavedLocation();
+});
+*/

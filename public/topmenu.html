@@ -23,8 +23,10 @@
                   <li><input id="block-02" type="radio" name="menu" class="toggle" onclick="select_menu()">
                     <label class="Label" for="block-02">オムクエについて</label></li>
                   <li><input id="block-03" type="radio" name="menu" class="toggle" onclick="select_menu()">
-                    <label class="Label" for="block-03">工事中</label></li>
-                </ul>
+                    <label class="Label" for="block-03">使い方</label></li>
+                  <li><input id="block-04" type="radio" name="menu" class="toggle" onclick="select_menu()">
+                    <label class="Label" for="block-04">工事中</label></li>
+                  </ul>
               </nav>
 
         </header>
@@ -58,6 +60,9 @@
             <section id="section_3">
               <h2  class="main_ttl m50">工事中</h2> 
             </section>
+            <section id="section_4">
+              <h2  class="main_ttl m50">工事中</h2> 
+            </section>
            </div>
     </div>
     <script>    
@@ -65,17 +70,25 @@
         function select_menu() {
            menu = document.getElementsByName('menu')
            if (menu[0].checked) {
-               document.getElementById('section_1').style.display = "";
-               document.getElementById('section_2').style.display = "none";
-               document.getElementById('section_3').style.display = "none";
+            document.getElementById('section_1').style.display = "";
+            document.getElementById('section_2').style.display = "none";
+            document.getElementById('section_3').style.display = "none";
+            document.getElementById('section_4').style.display = "none";
            } else if (menu[1].checked) {
-               document.getElementById('section_1').style.display = "none";
-               document.getElementById('section_2').style.display = "";
-               document.getElementById('section_3').style.display = "none";
+            document.getElementById('section_1').style.display = "none";
+            document.getElementById('section_2').style.display = "";
+            document.getElementById('section_3').style.display = "none";
+            document.getElementById('section_4').style.display = "none";
+           } else if (menu[2].checked) {
+            document.getElementById('section_1').style.display = "none";
+            document.getElementById('section_2').style.display = "none";
+            document.getElementById('section_3').style.display = "";
+            document.getElementById('section_4').style.display = "none";
            } else {
-             document.getElementById('section_1').style.display = "none";
-               document.getElementById('section_2').style.display = "none";
-               document.getElementById('section_3').style.display = "";
+            document.getElementById('section_1').style.display = "none";
+            document.getElementById('section_2').style.display = "none";
+            document.getElementById('section_3').style.display = "none";
+            document.getElementById('section_4').style.display = "";
            }
        }
        window.addEventListener('load', select_menu());
